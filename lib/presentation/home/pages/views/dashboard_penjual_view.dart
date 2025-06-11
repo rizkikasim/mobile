@@ -1,0 +1,219 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:propedia/presentation/auth/pages/profiles/profile_page.dart';
+import 'package:propedia/presentation/home/pages/chats/chat_pages.dart';
+import 'package:propedia/presentation/home/pages/logic/dashboard_logic.dart';
+import 'package:propedia/presentation/home/widgets/custom_bottom_navigation_bar.dart';
+import 'package:propedia/presentation/home/widgets/menu_section.dart';
+import 'package:propedia/presentation/home/pages/penjual/post.dart';
+import 'package:propedia/presentation/home/widgets/snack_item_shimmer.dart';
+
+class DashboardPenjualView extends StatelessWidget {
+  final String userName;
+  final String userEmail;
+  final String userRole;
+  final DashboardLogic dashboardLogic;
+
+  const DashboardPenjualView({
+    super.key,
+    required this.userName,
+    required this.userEmail,
+    required this.userRole,
+    required this.dashboardLogic,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> pages = [
+      _buildHomePageContent(context),
+      const Center(child: Text('Activity Page Content')),
+      const Center(child: Text('Payment Page Content')),
+      const ChatPage(),
+    ];
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: pages[dashboardLogic.selectedIndex],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: dashboardLogic.selectedIndex,
+        onItemTapped: dashboardLogic.onItemTapped,
+      ),
+    );
+  }
+
+  Widget _buildHomePageContent(BuildContext context) {
+    final String defaultProfileImageUrl =
+        'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: 10.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => ProfilePage(
+                                userName: userName,
+                                userEmail: userEmail,
+                                userRole: userRole,
+                              ),
+                            ),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 25.w,
+                          backgroundImage: NetworkImage(defaultProfileImageUrl),
+                          onBackgroundImageError: (exception, stackTrace) {
+                            debugPrint(
+                              'Error loading profile image: $exception',
+                            );
+                          },
+                          child:
+                              defaultProfileImageUrl.isEmpty
+                                  ? Icon(
+                                      Icons.person,
+                                      size: 25.w,
+                                      color: Colors.white,
+                                    )
+                                  : null,
+                          backgroundColor:
+                              defaultProfileImageUrl.isEmpty
+                                  ? Colors.grey[300]
+                                  : null,
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            dashboardLogic.getGreeting(),
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                          Text(
+                            userName,
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.notifications_none,
+                      size: 28.w,
+                      color: Colors.grey[700],
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.h),
+            SizedBox(height: 10.h),
+            dashboardLogic.isLoadingHomePage
+                ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: const MenuSectionShimmer(),
+                  )
+                : Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: MenuSection(
+                      allMenuItems: dashboardLogic.allMenuItems,
+                      onItemTap: (index) {
+                        dashboardLogic.onMenuItemTapped(context, index);
+                      },
+                    ),
+                  ),
+            SizedBox(height: 10.h), // Spasi setelah MenuSection
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector( // Wrap with GestureDetector for tap
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PostPenjualanPage()),
+                        );
+                      },
+                      child: _buildActionButton(
+                        Icons.add_box_outlined, // Icon baru untuk postingan
+                        'Buat Postingan\nBaru', // Teks untuk tombol
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 15.w), // Spasi antar tombol, jika ada tombol lain
+                  Expanded(
+                    child: _buildActionButton(
+                      Icons.lightbulb_outline,
+                      'Discover\nNew Deals!',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton(IconData icon, String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.r),
+        border: Border.all(color: Colors.grey[200]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 30.w, color: const Color(0xFFFF6B00)),
+          SizedBox(width: 10.w),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

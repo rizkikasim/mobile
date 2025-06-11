@@ -20,15 +20,17 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserDto {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
-  String? get address => throw _privateConstructorUsedError;
-  bool? get isVerified => throw _privateConstructorUsedError;
-  bool? get isActive => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  bool get isVerified => throw _privateConstructorUsedError;
+  bool get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this UserDto to a JSON map.
@@ -46,16 +48,16 @@ abstract class $UserDtoCopyWith<$Res> {
       _$UserDtoCopyWithImpl<$Res, UserDto>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String username,
       String email,
       String phone,
       String role,
-      String? address,
-      bool? isVerified,
-      bool? isActive,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+      String address,
+      bool isVerified,
+      bool isActive,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -78,9 +80,9 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
     Object? email = null,
     Object? phone = null,
     Object? role = null,
-    Object? address = freezed,
-    Object? isVerified = freezed,
-    Object? isActive = freezed,
+    Object? address = null,
+    Object? isVerified = null,
+    Object? isActive = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -88,7 +90,7 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -105,18 +107,18 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      address: freezed == address
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isVerified: freezed == isVerified
+              as String,
+      isVerified: null == isVerified
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isActive: freezed == isActive
+              as bool,
+      isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -137,16 +139,16 @@ abstract class _$$UserDtoImplCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String username,
       String email,
       String phone,
       String role,
-      String? address,
-      bool? isVerified,
-      bool? isActive,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+      String address,
+      bool isVerified,
+      bool isActive,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -167,9 +169,9 @@ class __$$UserDtoImplCopyWithImpl<$Res>
     Object? email = null,
     Object? phone = null,
     Object? role = null,
-    Object? address = freezed,
-    Object? isVerified = freezed,
-    Object? isActive = freezed,
+    Object? address = null,
+    Object? isVerified = null,
+    Object? isActive = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -177,7 +179,7 @@ class __$$UserDtoImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -194,18 +196,18 @@ class __$$UserDtoImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
-      address: freezed == address
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isVerified: freezed == isVerified
+              as String,
+      isVerified: null == isVerified
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isActive: freezed == isActive
+              as bool,
+      isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -227,17 +229,17 @@ class _$UserDtoImpl implements _UserDto {
       required this.email,
       required this.phone,
       required this.role,
-      this.address,
-      this.isVerified,
-      this.isActive,
-      this.createdAt,
-      this.updatedAt});
+      this.address = '',
+      this.isVerified = false,
+      this.isActive = false,
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'updated_at') this.updatedAt});
 
   factory _$UserDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserDtoImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String username;
   @override
@@ -247,14 +249,19 @@ class _$UserDtoImpl implements _UserDto {
   @override
   final String role;
   @override
-  final String? address;
+  @JsonKey()
+  final String address;
   @override
-  final bool? isVerified;
+  @JsonKey()
+  final bool isVerified;
   @override
-  final bool? isActive;
+  @JsonKey()
+  final bool isActive;
   @override
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
   @override
@@ -307,21 +314,21 @@ class _$UserDtoImpl implements _UserDto {
 
 abstract class _UserDto implements UserDto {
   const factory _UserDto(
-      {required final String id,
+      {required final int id,
       required final String username,
       required final String email,
       required final String phone,
       required final String role,
-      final String? address,
-      final bool? isVerified,
-      final bool? isActive,
-      final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$UserDtoImpl;
+      final String address,
+      final bool isVerified,
+      final bool isActive,
+      @JsonKey(name: 'created_at') final DateTime? createdAt,
+      @JsonKey(name: 'updated_at') final DateTime? updatedAt}) = _$UserDtoImpl;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$UserDtoImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get username;
   @override
@@ -331,14 +338,16 @@ abstract class _UserDto implements UserDto {
   @override
   String get role;
   @override
-  String? get address;
+  String get address;
   @override
-  bool? get isVerified;
+  bool get isVerified;
   @override
-  bool? get isActive;
+  bool get isActive;
   @override
+  @JsonKey(name: 'created_at')
   DateTime? get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   DateTime? get updatedAt;
 
   /// Create a copy of UserDto
@@ -874,7 +883,7 @@ ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProfileDto {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
@@ -882,7 +891,9 @@ mixin _$ProfileDto {
   String? get address => throw _privateConstructorUsedError;
   bool? get isVerified => throw _privateConstructorUsedError;
   bool? get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileDto to a JSON map.
@@ -902,7 +913,7 @@ abstract class $ProfileDtoCopyWith<$Res> {
       _$ProfileDtoCopyWithImpl<$Res, ProfileDto>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String username,
       String email,
       String phone,
@@ -910,8 +921,8 @@ abstract class $ProfileDtoCopyWith<$Res> {
       String? address,
       bool? isVerified,
       bool? isActive,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -944,7 +955,7 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -994,7 +1005,7 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String username,
       String email,
       String phone,
@@ -1002,8 +1013,8 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
       String? address,
       bool? isVerified,
       bool? isActive,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -1034,7 +1045,7 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -1087,14 +1098,14 @@ class _$ProfileDtoImpl implements _ProfileDto {
       this.address,
       this.isVerified,
       this.isActive,
-      this.createdAt,
-      this.updatedAt});
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'updated_at') this.updatedAt});
 
   factory _$ProfileDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileDtoImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String username;
   @override
@@ -1110,8 +1121,10 @@ class _$ProfileDtoImpl implements _ProfileDto {
   @override
   final bool? isActive;
   @override
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
   @override
@@ -1164,22 +1177,23 @@ class _$ProfileDtoImpl implements _ProfileDto {
 
 abstract class _ProfileDto implements ProfileDto {
   const factory _ProfileDto(
-      {required final String id,
-      required final String username,
-      required final String email,
-      required final String phone,
-      required final String role,
-      final String? address,
-      final bool? isVerified,
-      final bool? isActive,
-      final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$ProfileDtoImpl;
+          {required final int id,
+          required final String username,
+          required final String email,
+          required final String phone,
+          required final String role,
+          final String? address,
+          final bool? isVerified,
+          final bool? isActive,
+          @JsonKey(name: 'created_at') final DateTime? createdAt,
+          @JsonKey(name: 'updated_at') final DateTime? updatedAt}) =
+      _$ProfileDtoImpl;
 
   factory _ProfileDto.fromJson(Map<String, dynamic> json) =
       _$ProfileDtoImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get username;
   @override
@@ -1195,8 +1209,10 @@ abstract class _ProfileDto implements ProfileDto {
   @override
   bool? get isActive;
   @override
+  @JsonKey(name: 'created_at')
   DateTime? get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   DateTime? get updatedAt;
 
   /// Create a copy of ProfileDto

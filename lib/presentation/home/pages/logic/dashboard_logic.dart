@@ -256,9 +256,6 @@ class DashboardLogic {
     final selectedMenuItem = allMenuItems[index];
     if (selectedMenuItem['type'] == 'house') {
       // Navigasi ke RumahAdditionPage
-      onNavigate(
-        const RumahAdditionPage(), // Tidak ada lagi parameter yang diteruskan
-      );
     } else {
       // Handle untuk jenis menu item lainnya
       debugPrint('Tapped on ${selectedMenuItem['title']}');

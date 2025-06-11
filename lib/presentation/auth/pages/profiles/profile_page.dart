@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:propedia/presentation/auth/cubit/auth_cubit.dart';
+import 'package:propedia/presentation/auth/cubit/auth_state.dart';
+import 'package:propedia/presentation/auth/pages/login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userName;
-  final String userEmail; // Tambahkan properti untuk email
+  final String userEmail;
+  final String userRole;
 
   const ProfilePage({
     super.key,
     required this.userName,
-    required this.userEmail, // Perbarui konstruktor
+    required this.userEmail,
+    required this.userRole,
   });
 
   @override
@@ -18,73 +24,93 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loggedOut: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const LoginPage()),
+              (route) => false,
+            );
+          },
+          error: (message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Logout gagal: $message'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          },
+        );
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 15.w),
-          child: Center(
-            child: Container(
-              width: 38.w,
-              height: 38.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(3, 3),
-                  ),
-                ],
-              ),
-              child: IconButton(
-                icon: Transform.translate(
-                  offset: Offset(2.0, 0.0),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black87,
-                    size: 20.w,
-                  ),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: Padding(
+            padding: EdgeInsets.only(left: 15.w),
+            child: Center(
+              child: Container(
+                width: 38.w,
+                height: 38.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(3, 3),
+                    ),
+                  ],
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                child: IconButton(
+                  icon: Transform.translate(
+                    offset: Offset(2.0, 0.0),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black87,
+                      size: 20.w,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             ),
           ),
-        ),
-        title: Text(
-          'Profile',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildProfileCard(),
-            SizedBox(height: 30.h),
-            Text(
-              'Settings',
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w600,
-              ),
+          title: Text(
+            'Profile',
+            style: TextStyle(
+              color: Colors.black87,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w600,
             ),
-            SizedBox(height: 15.h),
-            _buildSettingsList(),
-          ],
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildProfileCard(),
+              SizedBox(height: 30.h),
+              Text(
+                'Settings',
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 15.h),
+              _buildSettingsList(),
+            ],
+          ),
         ),
       ),
     );
@@ -117,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           SizedBox(height: 15.h),
           Text(
-            widget.userName, // Menggunakan userName dari widget
+            widget.userName,
             style: TextStyle(
               color: Colors.black87,
               fontSize: 22.sp,
@@ -126,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           SizedBox(height: 5.h),
           Text(
-            widget.userEmail, // Menggunakan userEmail dari widget
+            widget.userEmail,
             style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
           ),
           SizedBox(height: 15.h),
@@ -137,7 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
               borderRadius: BorderRadius.circular(20.r),
             ),
             child: Text(
-              'Premium',
+              widget.userRole.toUpperCase(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14.sp,
@@ -160,37 +186,45 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         _buildSettingsItem(
           icon: Icons.edit_note,
-          text: 'Update details',
+          text: 'Bahasa',
           onTap: () {
             debugPrint('Update details clicked');
           },
         ),
         _buildSettingsItem(
           icon: Icons.work_outline,
-          text: 'Manage account',
+          text: 'Pengaturan Akun',
           onTap: () {
             debugPrint('Manage account clicked');
           },
         ),
         _buildSettingsItem(
           icon: Icons.compare_arrows,
-          text: 'Quick transfer',
+          text: 'Keluar',
           onTap: () {
-            debugPrint('Quick transfer clicked');
-          },
-        ),
-        _buildSettingsItem(
-          icon: Icons.notifications_none,
-          text: 'Notification',
-          onTap: () {
-            debugPrint('Notification clicked');
-          },
-        ),
-        _buildSettingsItem(
-          icon: Icons.security,
-          text: 'Security',
-          onTap: () {
-            debugPrint('Security clicked');
+            showDialog(
+              context: context,
+              builder:
+                  (_) => AlertDialog(
+                    title: const Text("Keluar Aplikasi"),
+                    content: const Text(
+                      "Apakah kamu yakin ingin keluar dari akun ini?",
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("Batal"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          context.read<AuthCubit>().logout();
+                        },
+                        child: const Text("Keluar"),
+                      ),
+                    ],
+                  ),
+            );
           },
         ),
       ],

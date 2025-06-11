@@ -13,7 +13,9 @@ class _PropertiesApiService implements PropertiesApiService {
     this._dio, {
     this.baseUrl,
     this.errorLogger,
-  });
+  }) {
+    baseUrl ??= 'http://10.0.2.2:8000';
+  }
 
   final Dio _dio;
 
@@ -25,10 +27,12 @@ class _PropertiesApiService implements PropertiesApiService {
   Future<PropertyDto> createProperty(
     String role,
     CreatePropertyRequest request,
+    String token,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = request;
     final _options = _setStreamType<PropertyDto>(Options(
       method: 'POST',
@@ -58,10 +62,11 @@ class _PropertiesApiService implements PropertiesApiService {
   }
 
   @override
-  Future<List<PropertyTypeDto>> getPropertyTypes() async {
+  Future<List<PropertyTypeDto>> getPropertyTypes(String token) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<List<PropertyTypeDto>>(Options(
       method: 'GET',
@@ -94,10 +99,14 @@ class _PropertiesApiService implements PropertiesApiService {
   }
 
   @override
-  Future<List<PropertyDto>> getMyProperties(String role) async {
+  Future<List<PropertyDto>> getMyProperties(
+    String role,
+    String token,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<List<PropertyDto>>(Options(
       method: 'GET',
@@ -132,10 +141,12 @@ class _PropertiesApiService implements PropertiesApiService {
   Future<PropertyDto> getPropertyDetail(
     String role,
     String propertyId,
+    String token,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<PropertyDto>(Options(
       method: 'GET',
@@ -169,10 +180,12 @@ class _PropertiesApiService implements PropertiesApiService {
     String role,
     String propertyId,
     UpdatePropertyRequest request,
+    String token,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = request;
     final _options = _setStreamType<PropertyDto>(Options(
       method: 'PATCH',
@@ -205,10 +218,12 @@ class _PropertiesApiService implements PropertiesApiService {
   Future<void> deleteProperty(
     String role,
     String propertyId,
+    String token,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<void>(Options(
       method: 'DELETE',

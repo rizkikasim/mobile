@@ -20,29 +20,17 @@ PropertyDto _$PropertyDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PropertyDto {
-  @JsonKey(name: 'id')
-  int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'property_id')
-  String get propertyId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
+  int? get id => throw _privateConstructorUsedError;
+  String? get propertyId => throw _privateConstructorUsedError;
   int get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'nama_rumah')
-  String get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'harga')
-  int get price => throw _privateConstructorUsedError;
-  @JsonKey(name: 'tipe_rumah')
-  String get type => throw _privateConstructorUsedError;
-  @JsonKey(name: 'deskripsi')
-  String get description => throw _privateConstructorUsedError;
-  @JsonKey(name: 'lokasi')
-  String get location => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image_url')
+  String get namaRumah => throw _privateConstructorUsedError;
+  int get harga => throw _privateConstructorUsedError;
+  String get tipeRumah => throw _privateConstructorUsedError;
+  String get deskripsi => throw _privateConstructorUsedError;
+  String get lokasi => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_available')
   bool get isAvailable => throw _privateConstructorUsedError;
-  @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this PropertyDto to a JSON map.
@@ -62,18 +50,18 @@ abstract class $PropertyDtoCopyWith<$Res> {
       _$PropertyDtoCopyWithImpl<$Res, PropertyDto>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int id,
-      @JsonKey(name: 'property_id') String propertyId,
-      @JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'nama_rumah') String title,
-      @JsonKey(name: 'harga') int price,
-      @JsonKey(name: 'tipe_rumah') String type,
-      @JsonKey(name: 'deskripsi') String description,
-      @JsonKey(name: 'lokasi') String location,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'is_available') bool isAvailable,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt});
+      {int? id,
+      String? propertyId,
+      int userId,
+      String namaRumah,
+      int harga,
+      String tipeRumah,
+      String deskripsi,
+      String lokasi,
+      String? imageUrl,
+      bool isAvailable,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -91,51 +79,51 @@ class _$PropertyDtoCopyWithImpl<$Res, $Val extends PropertyDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? propertyId = null,
+    Object? id = freezed,
+    Object? propertyId = freezed,
     Object? userId = null,
-    Object? title = null,
-    Object? price = null,
-    Object? type = null,
-    Object? description = null,
-    Object? location = null,
+    Object? namaRumah = null,
+    Object? harga = null,
+    Object? tipeRumah = null,
+    Object? deskripsi = null,
+    Object? lokasi = null,
     Object? imageUrl = freezed,
     Object? isAvailable = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      propertyId: null == propertyId
+              as int?,
+      propertyId: freezed == propertyId
           ? _value.propertyId
           : propertyId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      namaRumah: null == namaRumah
+          ? _value.namaRumah
+          : namaRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
+      harga: null == harga
+          ? _value.harga
+          : harga // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      tipeRumah: null == tipeRumah
+          ? _value.tipeRumah
+          : tipeRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      deskripsi: null == deskripsi
+          ? _value.deskripsi
+          : deskripsi // ignore: cast_nullable_to_non_nullable
               as String,
-      location: null == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      lokasi: null == lokasi
+          ? _value.lokasi
+          : lokasi // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
@@ -166,18 +154,18 @@ abstract class _$$PropertyDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') int id,
-      @JsonKey(name: 'property_id') String propertyId,
-      @JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'nama_rumah') String title,
-      @JsonKey(name: 'harga') int price,
-      @JsonKey(name: 'tipe_rumah') String type,
-      @JsonKey(name: 'deskripsi') String description,
-      @JsonKey(name: 'lokasi') String location,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'is_available') bool isAvailable,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt});
+      {int? id,
+      String? propertyId,
+      int userId,
+      String namaRumah,
+      int harga,
+      String tipeRumah,
+      String deskripsi,
+      String lokasi,
+      String? imageUrl,
+      bool isAvailable,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -193,51 +181,51 @@ class __$$PropertyDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? propertyId = null,
+    Object? id = freezed,
+    Object? propertyId = freezed,
     Object? userId = null,
-    Object? title = null,
-    Object? price = null,
-    Object? type = null,
-    Object? description = null,
-    Object? location = null,
+    Object? namaRumah = null,
+    Object? harga = null,
+    Object? tipeRumah = null,
+    Object? deskripsi = null,
+    Object? lokasi = null,
     Object? imageUrl = freezed,
     Object? isAvailable = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$PropertyDtoImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      propertyId: null == propertyId
+              as int?,
+      propertyId: freezed == propertyId
           ? _value.propertyId
           : propertyId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      namaRumah: null == namaRumah
+          ? _value.namaRumah
+          : namaRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
+      harga: null == harga
+          ? _value.harga
+          : harga // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      tipeRumah: null == tipeRumah
+          ? _value.tipeRumah
+          : tipeRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      deskripsi: null == deskripsi
+          ? _value.deskripsi
+          : deskripsi // ignore: cast_nullable_to_non_nullable
               as String,
-      location: null == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      lokasi: null == lokasi
+          ? _value.lokasi
+          : lokasi // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
@@ -263,62 +251,51 @@ class __$$PropertyDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PropertyDtoImpl implements _PropertyDto {
   const _$PropertyDtoImpl(
-      {@JsonKey(name: 'id') required this.id,
-      @JsonKey(name: 'property_id') required this.propertyId,
-      @JsonKey(name: 'user_id') required this.userId,
-      @JsonKey(name: 'nama_rumah') required this.title,
-      @JsonKey(name: 'harga') required this.price,
-      @JsonKey(name: 'tipe_rumah') required this.type,
-      @JsonKey(name: 'deskripsi') required this.description,
-      @JsonKey(name: 'lokasi') required this.location,
-      @JsonKey(name: 'image_url') this.imageUrl,
-      @JsonKey(name: 'is_available') this.isAvailable = false,
-      @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt});
+      {this.id,
+      this.propertyId,
+      required this.userId,
+      required this.namaRumah,
+      required this.harga,
+      required this.tipeRumah,
+      required this.deskripsi,
+      required this.lokasi,
+      this.imageUrl,
+      this.isAvailable = false,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$PropertyDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$PropertyDtoImplFromJson(json);
 
   @override
-  @JsonKey(name: 'id')
-  final int id;
+  final int? id;
   @override
-  @JsonKey(name: 'property_id')
-  final String propertyId;
+  final String? propertyId;
   @override
-  @JsonKey(name: 'user_id')
   final int userId;
   @override
-  @JsonKey(name: 'nama_rumah')
-  final String title;
+  final String namaRumah;
   @override
-  @JsonKey(name: 'harga')
-  final int price;
+  final int harga;
   @override
-  @JsonKey(name: 'tipe_rumah')
-  final String type;
+  final String tipeRumah;
   @override
-  @JsonKey(name: 'deskripsi')
-  final String description;
+  final String deskripsi;
   @override
-  @JsonKey(name: 'lokasi')
-  final String location;
+  final String lokasi;
   @override
-  @JsonKey(name: 'image_url')
   final String? imageUrl;
   @override
-  @JsonKey(name: 'is_available')
+  @JsonKey()
   final bool isAvailable;
   @override
-  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   @override
-  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'PropertyDto(id: $id, propertyId: $propertyId, userId: $userId, title: $title, price: $price, type: $type, description: $description, location: $location, imageUrl: $imageUrl, isAvailable: $isAvailable, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PropertyDto(id: $id, propertyId: $propertyId, userId: $userId, namaRumah: $namaRumah, harga: $harga, tipeRumah: $tipeRumah, deskripsi: $deskripsi, lokasi: $lokasi, imageUrl: $imageUrl, isAvailable: $isAvailable, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -330,13 +307,14 @@ class _$PropertyDtoImpl implements _PropertyDto {
             (identical(other.propertyId, propertyId) ||
                 other.propertyId == propertyId) &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
+            (identical(other.namaRumah, namaRumah) ||
+                other.namaRumah == namaRumah) &&
+            (identical(other.harga, harga) || other.harga == harga) &&
+            (identical(other.tipeRumah, tipeRumah) ||
+                other.tipeRumah == tipeRumah) &&
+            (identical(other.deskripsi, deskripsi) ||
+                other.deskripsi == deskripsi) &&
+            (identical(other.lokasi, lokasi) || other.lokasi == lokasi) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.isAvailable, isAvailable) ||
@@ -354,11 +332,11 @@ class _$PropertyDtoImpl implements _PropertyDto {
       id,
       propertyId,
       userId,
-      title,
-      price,
-      type,
-      description,
-      location,
+      namaRumah,
+      harga,
+      tipeRumah,
+      deskripsi,
+      lokasi,
       imageUrl,
       isAvailable,
       createdAt,
@@ -382,58 +360,45 @@ class _$PropertyDtoImpl implements _PropertyDto {
 
 abstract class _PropertyDto implements PropertyDto {
   const factory _PropertyDto(
-          {@JsonKey(name: 'id') required final int id,
-          @JsonKey(name: 'property_id') required final String propertyId,
-          @JsonKey(name: 'user_id') required final int userId,
-          @JsonKey(name: 'nama_rumah') required final String title,
-          @JsonKey(name: 'harga') required final int price,
-          @JsonKey(name: 'tipe_rumah') required final String type,
-          @JsonKey(name: 'deskripsi') required final String description,
-          @JsonKey(name: 'lokasi') required final String location,
-          @JsonKey(name: 'image_url') final String? imageUrl,
-          @JsonKey(name: 'is_available') final bool isAvailable,
-          @JsonKey(name: 'created_at') final DateTime? createdAt,
-          @JsonKey(name: 'updated_at') final DateTime? updatedAt}) =
-      _$PropertyDtoImpl;
+      {final int? id,
+      final String? propertyId,
+      required final int userId,
+      required final String namaRumah,
+      required final int harga,
+      required final String tipeRumah,
+      required final String deskripsi,
+      required final String lokasi,
+      final String? imageUrl,
+      final bool isAvailable,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$PropertyDtoImpl;
 
   factory _PropertyDto.fromJson(Map<String, dynamic> json) =
       _$PropertyDtoImpl.fromJson;
 
   @override
-  @JsonKey(name: 'id')
-  int get id;
+  int? get id;
   @override
-  @JsonKey(name: 'property_id')
-  String get propertyId;
+  String? get propertyId;
   @override
-  @JsonKey(name: 'user_id')
   int get userId;
   @override
-  @JsonKey(name: 'nama_rumah')
-  String get title;
+  String get namaRumah;
   @override
-  @JsonKey(name: 'harga')
-  int get price;
+  int get harga;
   @override
-  @JsonKey(name: 'tipe_rumah')
-  String get type;
+  String get tipeRumah;
   @override
-  @JsonKey(name: 'deskripsi')
-  String get description;
+  String get deskripsi;
   @override
-  @JsonKey(name: 'lokasi')
-  String get location;
+  String get lokasi;
   @override
-  @JsonKey(name: 'image_url')
   String? get imageUrl;
   @override
-  @JsonKey(name: 'is_available')
   bool get isAvailable;
   @override
-  @JsonKey(name: 'created_at')
   DateTime? get createdAt;
   @override
-  @JsonKey(name: 'updated_at')
   DateTime? get updatedAt;
 
   /// Create a copy of PropertyDto
@@ -620,7 +585,6 @@ CreatePropertyResponseDto _$CreatePropertyResponseDtoFromJson(
 /// @nodoc
 mixin _$CreatePropertyResponseDto {
   String? get message => throw _privateConstructorUsedError;
-  @JsonKey(name: 'data')
   PropertyDto get data => throw _privateConstructorUsedError;
 
   /// Serializes this CreatePropertyResponseDto to a JSON map.
@@ -639,7 +603,7 @@ abstract class $CreatePropertyResponseDtoCopyWith<$Res> {
           $Res Function(CreatePropertyResponseDto) then) =
       _$CreatePropertyResponseDtoCopyWithImpl<$Res, CreatePropertyResponseDto>;
   @useResult
-  $Res call({String? message, @JsonKey(name: 'data') PropertyDto data});
+  $Res call({String? message, PropertyDto data});
 
   $PropertyDtoCopyWith<$Res> get data;
 }
@@ -695,7 +659,7 @@ abstract class _$$CreatePropertyResponseDtoImplCopyWith<$Res>
       __$$CreatePropertyResponseDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? message, @JsonKey(name: 'data') PropertyDto data});
+  $Res call({String? message, PropertyDto data});
 
   @override
   $PropertyDtoCopyWith<$Res> get data;
@@ -735,8 +699,7 @@ class __$$CreatePropertyResponseDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CreatePropertyResponseDtoImpl implements _CreatePropertyResponseDto {
-  const _$CreatePropertyResponseDtoImpl(
-      {this.message, @JsonKey(name: 'data') required this.data});
+  const _$CreatePropertyResponseDtoImpl({this.message, required this.data});
 
   factory _$CreatePropertyResponseDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreatePropertyResponseDtoImplFromJson(json);
@@ -744,7 +707,6 @@ class _$CreatePropertyResponseDtoImpl implements _CreatePropertyResponseDto {
   @override
   final String? message;
   @override
-  @JsonKey(name: 'data')
   final PropertyDto data;
 
   @override
@@ -784,9 +746,8 @@ class _$CreatePropertyResponseDtoImpl implements _CreatePropertyResponseDto {
 
 abstract class _CreatePropertyResponseDto implements CreatePropertyResponseDto {
   const factory _CreatePropertyResponseDto(
-          {final String? message,
-          @JsonKey(name: 'data') required final PropertyDto data}) =
-      _$CreatePropertyResponseDtoImpl;
+      {final String? message,
+      required final PropertyDto data}) = _$CreatePropertyResponseDtoImpl;
 
   factory _CreatePropertyResponseDto.fromJson(Map<String, dynamic> json) =
       _$CreatePropertyResponseDtoImpl.fromJson;
@@ -794,7 +755,6 @@ abstract class _CreatePropertyResponseDto implements CreatePropertyResponseDto {
   @override
   String? get message;
   @override
-  @JsonKey(name: 'data')
   PropertyDto get data;
 
   /// Create a copy of CreatePropertyResponseDto

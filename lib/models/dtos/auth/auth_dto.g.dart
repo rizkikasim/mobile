@@ -8,20 +8,20 @@ part of 'auth_dto.dart';
 
 _$UserDtoImpl _$$UserDtoImplFromJson(Map<String, dynamic> json) =>
     _$UserDtoImpl(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
       username: json['username'] as String,
       email: json['email'] as String,
       phone: json['phone'] as String,
       role: json['role'] as String,
-      address: json['address'] as String?,
-      isVerified: json['isVerified'] as bool?,
-      isActive: json['isActive'] as bool?,
-      createdAt: json['createdAt'] == null
+      address: json['address'] as String? ?? '',
+      isVerified: json['isVerified'] as bool? ?? false,
+      isActive: json['isActive'] as bool? ?? false,
+      createdAt: json['created_at'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
           ? null
-          : DateTime.parse(json['updatedAt'] as String),
+          : DateTime.parse(json['updated_at'] as String),
     );
 
 Map<String, dynamic> _$$UserDtoImplToJson(_$UserDtoImpl instance) =>
@@ -34,8 +34,8 @@ Map<String, dynamic> _$$UserDtoImplToJson(_$UserDtoImpl instance) =>
       'address': instance.address,
       'isVerified': instance.isVerified,
       'isActive': instance.isActive,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
 _$LoginResponseDtoImpl _$$LoginResponseDtoImplFromJson(
@@ -86,7 +86,7 @@ Map<String, dynamic> _$$LoginDataDtoImplToJson(_$LoginDataDtoImpl instance) =>
 
 _$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
     _$ProfileDtoImpl(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
       username: json['username'] as String,
       email: json['email'] as String,
       phone: json['phone'] as String,
@@ -94,12 +94,12 @@ _$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
       isVerified: json['isVerified'] as bool?,
       isActive: json['isActive'] as bool?,
-      createdAt: json['createdAt'] == null
+      createdAt: json['created_at'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
           ? null
-          : DateTime.parse(json['updatedAt'] as String),
+          : DateTime.parse(json['updated_at'] as String),
     );
 
 Map<String, dynamic> _$$ProfileDtoImplToJson(_$ProfileDtoImpl instance) =>
@@ -112,6 +112,6 @@ Map<String, dynamic> _$$ProfileDtoImplToJson(_$ProfileDtoImpl instance) =>
       'address': instance.address,
       'isVerified': instance.isVerified,
       'isActive': instance.isActive,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };

@@ -7,9 +7,9 @@ part 'auth_request.g.dart';
 class RegisterRequest with _$RegisterRequest {
   const factory RegisterRequest({
     required String username,
-    required String email,
-    required String password,
-    required String phone,
+    String? email,        // opsional sesuai backend
+    String? phone,        // opsional sesuai backend
+    String? password,     // juga bisa opsional
   }) = _RegisterRequest;
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
@@ -19,7 +19,7 @@ class RegisterRequest with _$RegisterRequest {
 @freezed
 class LoginRequest with _$LoginRequest {
   const factory LoginRequest({
-    required String identifier, // ✅ sesuai backend
+    required String identifier, // bisa username / email / phone
     required String password,
   }) = _LoginRequest;
 

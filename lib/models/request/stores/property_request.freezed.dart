@@ -21,17 +21,11 @@ CreatePropertyRequest _$CreatePropertyRequestFromJson(
 
 /// @nodoc
 mixin _$CreatePropertyRequest {
-  @JsonKey(name: 'nama_rumah')
-  String get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'deskripsi')
-  String get description => throw _privateConstructorUsedError;
-  @JsonKey(name: 'tipe_rumah')
-  String get type => throw _privateConstructorUsedError;
-  @JsonKey(name: 'harga')
-  int get price => throw _privateConstructorUsedError;
-  @JsonKey(name: 'lokasi')
-  String get location => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image_url')
+  String get namaRumah => throw _privateConstructorUsedError;
+  String get deskripsi => throw _privateConstructorUsedError;
+  String get tipeRumah => throw _privateConstructorUsedError;
+  int get harga => throw _privateConstructorUsedError;
+  String get lokasi => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
 
   /// Serializes this CreatePropertyRequest to a JSON map.
@@ -51,12 +45,12 @@ abstract class $CreatePropertyRequestCopyWith<$Res> {
       _$CreatePropertyRequestCopyWithImpl<$Res, CreatePropertyRequest>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'nama_rumah') String title,
-      @JsonKey(name: 'deskripsi') String description,
-      @JsonKey(name: 'tipe_rumah') String type,
-      @JsonKey(name: 'harga') int price,
-      @JsonKey(name: 'lokasi') String location,
-      @JsonKey(name: 'image_url') String? imageUrl});
+      {String namaRumah,
+      String deskripsi,
+      String tipeRumah,
+      int harga,
+      String lokasi,
+      String? imageUrl});
 }
 
 /// @nodoc
@@ -75,33 +69,33 @@ class _$CreatePropertyRequestCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
-    Object? description = null,
-    Object? type = null,
-    Object? price = null,
-    Object? location = null,
+    Object? namaRumah = null,
+    Object? deskripsi = null,
+    Object? tipeRumah = null,
+    Object? harga = null,
+    Object? lokasi = null,
     Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      namaRumah: null == namaRumah
+          ? _value.namaRumah
+          : namaRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      deskripsi: null == deskripsi
+          ? _value.deskripsi
+          : deskripsi // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      tipeRumah: null == tipeRumah
+          ? _value.tipeRumah
+          : tipeRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
+      harga: null == harga
+          ? _value.harga
+          : harga // ignore: cast_nullable_to_non_nullable
               as int,
-      location: null == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      lokasi: null == lokasi
+          ? _value.lokasi
+          : lokasi // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
@@ -121,12 +115,12 @@ abstract class _$$CreatePropertyRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'nama_rumah') String title,
-      @JsonKey(name: 'deskripsi') String description,
-      @JsonKey(name: 'tipe_rumah') String type,
-      @JsonKey(name: 'harga') int price,
-      @JsonKey(name: 'lokasi') String location,
-      @JsonKey(name: 'image_url') String? imageUrl});
+      {String namaRumah,
+      String deskripsi,
+      String tipeRumah,
+      int harga,
+      String lokasi,
+      String? imageUrl});
 }
 
 /// @nodoc
@@ -143,33 +137,33 @@ class __$$CreatePropertyRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
-    Object? description = null,
-    Object? type = null,
-    Object? price = null,
-    Object? location = null,
+    Object? namaRumah = null,
+    Object? deskripsi = null,
+    Object? tipeRumah = null,
+    Object? harga = null,
+    Object? lokasi = null,
     Object? imageUrl = freezed,
   }) {
     return _then(_$CreatePropertyRequestImpl(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      namaRumah: null == namaRumah
+          ? _value.namaRumah
+          : namaRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      deskripsi: null == deskripsi
+          ? _value.deskripsi
+          : deskripsi // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      tipeRumah: null == tipeRumah
+          ? _value.tipeRumah
+          : tipeRumah // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
+      harga: null == harga
+          ? _value.harga
+          : harga // ignore: cast_nullable_to_non_nullable
               as int,
-      location: null == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      lokasi: null == lokasi
+          ? _value.lokasi
+          : lokasi // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
@@ -183,38 +177,32 @@ class __$$CreatePropertyRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CreatePropertyRequestImpl implements _CreatePropertyRequest {
   const _$CreatePropertyRequestImpl(
-      {@JsonKey(name: 'nama_rumah') required this.title,
-      @JsonKey(name: 'deskripsi') required this.description,
-      @JsonKey(name: 'tipe_rumah') required this.type,
-      @JsonKey(name: 'harga') required this.price,
-      @JsonKey(name: 'lokasi') required this.location,
-      @JsonKey(name: 'image_url') this.imageUrl});
+      {required this.namaRumah,
+      required this.deskripsi,
+      required this.tipeRumah,
+      required this.harga,
+      required this.lokasi,
+      this.imageUrl});
 
   factory _$CreatePropertyRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreatePropertyRequestImplFromJson(json);
 
   @override
-  @JsonKey(name: 'nama_rumah')
-  final String title;
+  final String namaRumah;
   @override
-  @JsonKey(name: 'deskripsi')
-  final String description;
+  final String deskripsi;
   @override
-  @JsonKey(name: 'tipe_rumah')
-  final String type;
+  final String tipeRumah;
   @override
-  @JsonKey(name: 'harga')
-  final int price;
+  final int harga;
   @override
-  @JsonKey(name: 'lokasi')
-  final String location;
+  final String lokasi;
   @override
-  @JsonKey(name: 'image_url')
   final String? imageUrl;
 
   @override
   String toString() {
-    return 'CreatePropertyRequest(title: $title, description: $description, type: $type, price: $price, location: $location, imageUrl: $imageUrl)';
+    return 'CreatePropertyRequest(namaRumah: $namaRumah, deskripsi: $deskripsi, tipeRumah: $tipeRumah, harga: $harga, lokasi: $lokasi, imageUrl: $imageUrl)';
   }
 
   @override
@@ -222,13 +210,14 @@ class _$CreatePropertyRequestImpl implements _CreatePropertyRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreatePropertyRequestImpl &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
+            (identical(other.namaRumah, namaRumah) ||
+                other.namaRumah == namaRumah) &&
+            (identical(other.deskripsi, deskripsi) ||
+                other.deskripsi == deskripsi) &&
+            (identical(other.tipeRumah, tipeRumah) ||
+                other.tipeRumah == tipeRumah) &&
+            (identical(other.harga, harga) || other.harga == harga) &&
+            (identical(other.lokasi, lokasi) || other.lokasi == lokasi) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl));
   }
@@ -236,7 +225,7 @@ class _$CreatePropertyRequestImpl implements _CreatePropertyRequest {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, title, description, type, price, location, imageUrl);
+      runtimeType, namaRumah, deskripsi, tipeRumah, harga, lokasi, imageUrl);
 
   /// Create a copy of CreatePropertyRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -257,34 +246,27 @@ class _$CreatePropertyRequestImpl implements _CreatePropertyRequest {
 
 abstract class _CreatePropertyRequest implements CreatePropertyRequest {
   const factory _CreatePropertyRequest(
-          {@JsonKey(name: 'nama_rumah') required final String title,
-          @JsonKey(name: 'deskripsi') required final String description,
-          @JsonKey(name: 'tipe_rumah') required final String type,
-          @JsonKey(name: 'harga') required final int price,
-          @JsonKey(name: 'lokasi') required final String location,
-          @JsonKey(name: 'image_url') final String? imageUrl}) =
-      _$CreatePropertyRequestImpl;
+      {required final String namaRumah,
+      required final String deskripsi,
+      required final String tipeRumah,
+      required final int harga,
+      required final String lokasi,
+      final String? imageUrl}) = _$CreatePropertyRequestImpl;
 
   factory _CreatePropertyRequest.fromJson(Map<String, dynamic> json) =
       _$CreatePropertyRequestImpl.fromJson;
 
   @override
-  @JsonKey(name: 'nama_rumah')
-  String get title;
+  String get namaRumah;
   @override
-  @JsonKey(name: 'deskripsi')
-  String get description;
+  String get deskripsi;
   @override
-  @JsonKey(name: 'tipe_rumah')
-  String get type;
+  String get tipeRumah;
   @override
-  @JsonKey(name: 'harga')
-  int get price;
+  int get harga;
   @override
-  @JsonKey(name: 'lokasi')
-  String get location;
+  String get lokasi;
   @override
-  @JsonKey(name: 'image_url')
   String? get imageUrl;
 
   /// Create a copy of CreatePropertyRequest
@@ -302,19 +284,12 @@ UpdatePropertyRequest _$UpdatePropertyRequestFromJson(
 
 /// @nodoc
 mixin _$UpdatePropertyRequest {
-  @JsonKey(name: 'nama_rumah')
-  String? get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'deskripsi')
-  String? get description => throw _privateConstructorUsedError;
-  @JsonKey(name: 'tipe_rumah')
-  String? get type => throw _privateConstructorUsedError;
-  @JsonKey(name: 'harga')
-  int? get price => throw _privateConstructorUsedError;
-  @JsonKey(name: 'lokasi')
-  String? get location => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image_url')
+  String? get namaRumah => throw _privateConstructorUsedError;
+  String? get deskripsi => throw _privateConstructorUsedError;
+  String? get tipeRumah => throw _privateConstructorUsedError;
+  int? get harga => throw _privateConstructorUsedError;
+  String? get lokasi => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_available')
   bool? get isAvailable => throw _privateConstructorUsedError;
 
   /// Serializes this UpdatePropertyRequest to a JSON map.
@@ -334,13 +309,13 @@ abstract class $UpdatePropertyRequestCopyWith<$Res> {
       _$UpdatePropertyRequestCopyWithImpl<$Res, UpdatePropertyRequest>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'nama_rumah') String? title,
-      @JsonKey(name: 'deskripsi') String? description,
-      @JsonKey(name: 'tipe_rumah') String? type,
-      @JsonKey(name: 'harga') int? price,
-      @JsonKey(name: 'lokasi') String? location,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'is_available') bool? isAvailable});
+      {String? namaRumah,
+      String? deskripsi,
+      String? tipeRumah,
+      int? harga,
+      String? lokasi,
+      String? imageUrl,
+      bool? isAvailable});
 }
 
 /// @nodoc
@@ -359,34 +334,34 @@ class _$UpdatePropertyRequestCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? description = freezed,
-    Object? type = freezed,
-    Object? price = freezed,
-    Object? location = freezed,
+    Object? namaRumah = freezed,
+    Object? deskripsi = freezed,
+    Object? tipeRumah = freezed,
+    Object? harga = freezed,
+    Object? lokasi = freezed,
     Object? imageUrl = freezed,
     Object? isAvailable = freezed,
   }) {
     return _then(_value.copyWith(
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      namaRumah: freezed == namaRumah
+          ? _value.namaRumah
+          : namaRumah // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      deskripsi: freezed == deskripsi
+          ? _value.deskripsi
+          : deskripsi // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      tipeRumah: freezed == tipeRumah
+          ? _value.tipeRumah
+          : tipeRumah // ignore: cast_nullable_to_non_nullable
               as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
+      harga: freezed == harga
+          ? _value.harga
+          : harga // ignore: cast_nullable_to_non_nullable
               as int?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      lokasi: freezed == lokasi
+          ? _value.lokasi
+          : lokasi // ignore: cast_nullable_to_non_nullable
               as String?,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
@@ -410,13 +385,13 @@ abstract class _$$UpdatePropertyRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'nama_rumah') String? title,
-      @JsonKey(name: 'deskripsi') String? description,
-      @JsonKey(name: 'tipe_rumah') String? type,
-      @JsonKey(name: 'harga') int? price,
-      @JsonKey(name: 'lokasi') String? location,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'is_available') bool? isAvailable});
+      {String? namaRumah,
+      String? deskripsi,
+      String? tipeRumah,
+      int? harga,
+      String? lokasi,
+      String? imageUrl,
+      bool? isAvailable});
 }
 
 /// @nodoc
@@ -433,34 +408,34 @@ class __$$UpdatePropertyRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? description = freezed,
-    Object? type = freezed,
-    Object? price = freezed,
-    Object? location = freezed,
+    Object? namaRumah = freezed,
+    Object? deskripsi = freezed,
+    Object? tipeRumah = freezed,
+    Object? harga = freezed,
+    Object? lokasi = freezed,
     Object? imageUrl = freezed,
     Object? isAvailable = freezed,
   }) {
     return _then(_$UpdatePropertyRequestImpl(
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      namaRumah: freezed == namaRumah
+          ? _value.namaRumah
+          : namaRumah // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      deskripsi: freezed == deskripsi
+          ? _value.deskripsi
+          : deskripsi // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      tipeRumah: freezed == tipeRumah
+          ? _value.tipeRumah
+          : tipeRumah // ignore: cast_nullable_to_non_nullable
               as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
+      harga: freezed == harga
+          ? _value.harga
+          : harga // ignore: cast_nullable_to_non_nullable
               as int?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      lokasi: freezed == lokasi
+          ? _value.lokasi
+          : lokasi // ignore: cast_nullable_to_non_nullable
               as String?,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
@@ -478,42 +453,35 @@ class __$$UpdatePropertyRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UpdatePropertyRequestImpl implements _UpdatePropertyRequest {
   const _$UpdatePropertyRequestImpl(
-      {@JsonKey(name: 'nama_rumah') this.title,
-      @JsonKey(name: 'deskripsi') this.description,
-      @JsonKey(name: 'tipe_rumah') this.type,
-      @JsonKey(name: 'harga') this.price,
-      @JsonKey(name: 'lokasi') this.location,
-      @JsonKey(name: 'image_url') this.imageUrl,
-      @JsonKey(name: 'is_available') this.isAvailable});
+      {this.namaRumah,
+      this.deskripsi,
+      this.tipeRumah,
+      this.harga,
+      this.lokasi,
+      this.imageUrl,
+      this.isAvailable});
 
   factory _$UpdatePropertyRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$UpdatePropertyRequestImplFromJson(json);
 
   @override
-  @JsonKey(name: 'nama_rumah')
-  final String? title;
+  final String? namaRumah;
   @override
-  @JsonKey(name: 'deskripsi')
-  final String? description;
+  final String? deskripsi;
   @override
-  @JsonKey(name: 'tipe_rumah')
-  final String? type;
+  final String? tipeRumah;
   @override
-  @JsonKey(name: 'harga')
-  final int? price;
+  final int? harga;
   @override
-  @JsonKey(name: 'lokasi')
-  final String? location;
+  final String? lokasi;
   @override
-  @JsonKey(name: 'image_url')
   final String? imageUrl;
   @override
-  @JsonKey(name: 'is_available')
   final bool? isAvailable;
 
   @override
   String toString() {
-    return 'UpdatePropertyRequest(title: $title, description: $description, type: $type, price: $price, location: $location, imageUrl: $imageUrl, isAvailable: $isAvailable)';
+    return 'UpdatePropertyRequest(namaRumah: $namaRumah, deskripsi: $deskripsi, tipeRumah: $tipeRumah, harga: $harga, lokasi: $lokasi, imageUrl: $imageUrl, isAvailable: $isAvailable)';
   }
 
   @override
@@ -521,13 +489,14 @@ class _$UpdatePropertyRequestImpl implements _UpdatePropertyRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePropertyRequestImpl &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
+            (identical(other.namaRumah, namaRumah) ||
+                other.namaRumah == namaRumah) &&
+            (identical(other.deskripsi, deskripsi) ||
+                other.deskripsi == deskripsi) &&
+            (identical(other.tipeRumah, tipeRumah) ||
+                other.tipeRumah == tipeRumah) &&
+            (identical(other.harga, harga) || other.harga == harga) &&
+            (identical(other.lokasi, lokasi) || other.lokasi == lokasi) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.isAvailable, isAvailable) ||
@@ -536,8 +505,8 @@ class _$UpdatePropertyRequestImpl implements _UpdatePropertyRequest {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, description, type, price,
-      location, imageUrl, isAvailable);
+  int get hashCode => Object.hash(runtimeType, namaRumah, deskripsi, tipeRumah,
+      harga, lokasi, imageUrl, isAvailable);
 
   /// Create a copy of UpdatePropertyRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -558,38 +527,30 @@ class _$UpdatePropertyRequestImpl implements _UpdatePropertyRequest {
 
 abstract class _UpdatePropertyRequest implements UpdatePropertyRequest {
   const factory _UpdatePropertyRequest(
-          {@JsonKey(name: 'nama_rumah') final String? title,
-          @JsonKey(name: 'deskripsi') final String? description,
-          @JsonKey(name: 'tipe_rumah') final String? type,
-          @JsonKey(name: 'harga') final int? price,
-          @JsonKey(name: 'lokasi') final String? location,
-          @JsonKey(name: 'image_url') final String? imageUrl,
-          @JsonKey(name: 'is_available') final bool? isAvailable}) =
-      _$UpdatePropertyRequestImpl;
+      {final String? namaRumah,
+      final String? deskripsi,
+      final String? tipeRumah,
+      final int? harga,
+      final String? lokasi,
+      final String? imageUrl,
+      final bool? isAvailable}) = _$UpdatePropertyRequestImpl;
 
   factory _UpdatePropertyRequest.fromJson(Map<String, dynamic> json) =
       _$UpdatePropertyRequestImpl.fromJson;
 
   @override
-  @JsonKey(name: 'nama_rumah')
-  String? get title;
+  String? get namaRumah;
   @override
-  @JsonKey(name: 'deskripsi')
-  String? get description;
+  String? get deskripsi;
   @override
-  @JsonKey(name: 'tipe_rumah')
-  String? get type;
+  String? get tipeRumah;
   @override
-  @JsonKey(name: 'harga')
-  int? get price;
+  int? get harga;
   @override
-  @JsonKey(name: 'lokasi')
-  String? get location;
+  String? get lokasi;
   @override
-  @JsonKey(name: 'image_url')
   String? get imageUrl;
   @override
-  @JsonKey(name: 'is_available')
   bool? get isAvailable;
 
   /// Create a copy of UpdatePropertyRequest

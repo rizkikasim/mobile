@@ -6,18 +6,18 @@ part 'properties_dto.g.dart';
 @freezed
 class PropertyDto with _$PropertyDto {
   const factory PropertyDto({
-    @JsonKey(name: 'id') required int id,
-    @JsonKey(name: 'property_id') required String propertyId,
-    @JsonKey(name: 'user_id') required int userId,
-    @JsonKey(name: 'nama_rumah') required String title,
-    @JsonKey(name: 'harga') required int price,
-    @JsonKey(name: 'tipe_rumah') required String type,
-    @JsonKey(name: 'deskripsi') required String description,
-    @JsonKey(name: 'lokasi') required String location,
-    @JsonKey(name: 'image_url') String? imageUrl,
-    @JsonKey(name: 'is_available') @Default(false) bool isAvailable,
-    @JsonKey(name: 'created_at') DateTime? createdAt,
-    @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    int? id,
+    String? propertyId,
+    required int userId,
+    required String namaRumah,
+    required int harga,
+    required String tipeRumah,
+    required String deskripsi,
+    required String lokasi,
+    String? imageUrl,
+    @Default(false) bool isAvailable,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _PropertyDto;
 
   factory PropertyDto.fromJson(Map<String, dynamic> json) =>
@@ -39,7 +39,7 @@ class PropertyTypeDto with _$PropertyTypeDto {
 class CreatePropertyResponseDto with _$CreatePropertyResponseDto {
   const factory CreatePropertyResponseDto({
     String? message,
-    @JsonKey(name: 'data') required PropertyDto data,
+    required PropertyDto data,
   }) = _CreatePropertyResponseDto;
 
   factory CreatePropertyResponseDto.fromJson(Map<String, dynamic> json) =>

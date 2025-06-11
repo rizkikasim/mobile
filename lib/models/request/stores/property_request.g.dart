@@ -9,45 +9,45 @@ part of 'property_request.dart';
 _$CreatePropertyRequestImpl _$$CreatePropertyRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$CreatePropertyRequestImpl(
-      title: json['nama_rumah'] as String,
-      description: json['deskripsi'] as String,
-      type: json['tipe_rumah'] as String,
-      price: (json['harga'] as num).toInt(),
-      location: json['lokasi'] as String,
-      imageUrl: json['image_url'] as String?,
+      namaRumah: json['namaRumah'] as String,
+      deskripsi: json['deskripsi'] as String,
+      tipeRumah: json['tipeRumah'] as String,
+      harga: (json['harga'] as num).toInt(),
+      lokasi: json['lokasi'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$$CreatePropertyRequestImplToJson(
         _$CreatePropertyRequestImpl instance) =>
     <String, dynamic>{
-      'nama_rumah': instance.title,
-      'deskripsi': instance.description,
-      'tipe_rumah': instance.type,
-      'harga': instance.price,
-      'lokasi': instance.location,
-      'image_url': instance.imageUrl,
+      'namaRumah': instance.namaRumah,
+      'deskripsi': instance.deskripsi,
+      'tipeRumah': instance.tipeRumah,
+      'harga': instance.harga,
+      'lokasi': instance.lokasi,
+      'imageUrl': instance.imageUrl,
     };
 
 _$UpdatePropertyRequestImpl _$$UpdatePropertyRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$UpdatePropertyRequestImpl(
-      title: json['nama_rumah'] as String?,
-      description: json['deskripsi'] as String?,
-      type: json['tipe_rumah'] as String?,
-      price: (json['harga'] as num?)?.toInt(),
-      location: json['lokasi'] as String?,
-      imageUrl: json['image_url'] as String?,
-      isAvailable: json['is_available'] as bool?,
+      namaRumah: json['namaRumah'] as String?,
+      deskripsi: json['deskripsi'] as String?,
+      tipeRumah: json['tipeRumah'] as String?,
+      harga: (json['harga'] as num?)?.toInt(),
+      lokasi: json['lokasi'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      isAvailable: json['isAvailable'] as bool?,
     );
 
 Map<String, dynamic> _$$UpdatePropertyRequestImplToJson(
         _$UpdatePropertyRequestImpl instance) =>
     <String, dynamic>{
-      'nama_rumah': instance.title,
-      'deskripsi': instance.description,
-      'tipe_rumah': instance.type,
-      'harga': instance.price,
-      'lokasi': instance.location,
-      'image_url': instance.imageUrl,
-      'is_available': instance.isAvailable,
+      'namaRumah': instance.namaRumah,
+      'deskripsi': instance.deskripsi,
+      'tipeRumah': instance.tipeRumah,
+      'harga': instance.harga,
+      'lokasi': instance.lokasi,
+      'imageUrl': instance.imageUrl,
+      'isAvailable': instance.isAvailable,
     };

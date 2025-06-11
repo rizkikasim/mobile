@@ -11,60 +11,36 @@ abstract class AuthApiService {
   @POST('/api/admin/register')
   Future<HttpResponse> adminRegister(@Body() requestBody);
 
-  @POST('/api/admin/login')
-  Future<HttpResponse> adminLogin(@Body() requestBody);
-
-  @GET('/api/admin/me')
-  Future<HttpResponse> adminGetMyProfile();
-
-  @PATCH('/api/admin/profile/{id}')
-  Future<HttpResponse> adminUpdateProfile(
-    @Path('id') String id,
-    @Body() updates,
-  );
-
-  @POST('/api/admin/logout/{id}')
-  Future<HttpResponse<void>> adminLogout(@Path('id') String id);
-
   @POST('/api/penjual/register')
   Future<HttpResponse> penjualRegister(@Body() requestBody);
-
-  @POST('/api/penjual/login')
-  Future<HttpResponse> penjualLogin(@Body() requestBody);
-
-  @GET('/api/penjual/me')
-  Future<HttpResponse> penjualGetMyProfile();
-
-  @PATCH('/api/penjual/profile/{id}')
-  Future<HttpResponse> penjualUpdateProfile(
-    @Path('id') String id,
-    @Body() updates,
-  );
-
-  @POST('/api/penjual/logout/{id}')
-  Future<HttpResponse<void>> penjualLogout(@Path('id') String id);
 
   @POST('/api/pembeli/register')
   Future<HttpResponse> pembeliRegister(@Body() requestBody);
 
-  @POST('/api/pembeli/login')
-  Future<HttpResponse> pembeliLogin(@Body() requestBody);
+  @POST('/api/login')
+  Future<HttpResponse> universalLogin(@Body() requestBody);
 
-  @GET('/api/pembeli/me')
-  Future<HttpResponse> pembeliGetMyProfile();
+@GET('/api/me')
+Future<HttpResponse> getMyProfile(
+  @Header("Authorization") String token,
+);
 
-  @PATCH('/api/pembeli/profile/{id}')
-  Future<HttpResponse> pembeliUpdateProfile(
+
+  @PATCH('/api/profile/{id}')
+  Future<HttpResponse> updateProfile(@Path('id') String id, @Body() updates);
+
+  @POST('/api/logout/{id}')
+  Future<HttpResponse<void>> logout(
     @Path('id') String id,
-    @Body() updates,
+    @Header("Authorization") String token,
   );
+
+  @POST('/api/refresh')
+  Future<HttpResponse> refreshToken();
 
   @POST('/api/otp/send')
   Future<HttpResponse> sendOtp(@Body() requestBody);
 
   @POST('/api/otp/verify')
   Future<HttpResponse> verifyOtp(@Body() requestBody);
-
-  @POST('/api/pembeli/logout/{id}')
-  Future<HttpResponse<void>> pembeliLogout(@Path('id') String id);
 }

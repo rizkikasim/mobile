@@ -6,12 +6,12 @@ part 'property_request.g.dart';
 @freezed
 class CreatePropertyRequest with _$CreatePropertyRequest {
   const factory CreatePropertyRequest({
-    @JsonKey(name: 'nama_rumah') required String title,
-    @JsonKey(name: 'deskripsi') required String description,
-    @JsonKey(name: 'tipe_rumah') required String type,
-    @JsonKey(name: 'harga') required int price,
-    @JsonKey(name: 'lokasi') required String location,
-    @JsonKey(name: 'image_url') String? imageUrl,
+    required String namaRumah,
+    required String deskripsi,
+    required String tipeRumah,
+    required int harga,
+    required String lokasi,
+    String? imageUrl,
   }) = _CreatePropertyRequest;
 
   factory CreatePropertyRequest.fromJson(Map<String, dynamic> json) =>
@@ -21,13 +21,13 @@ class CreatePropertyRequest with _$CreatePropertyRequest {
 @freezed
 class UpdatePropertyRequest with _$UpdatePropertyRequest {
   const factory UpdatePropertyRequest({
-    @JsonKey(name: 'nama_rumah') String? title,
-    @JsonKey(name: 'deskripsi') String? description,
-    @JsonKey(name: 'tipe_rumah') String? type,
-    @JsonKey(name: 'harga') int? price,
-    @JsonKey(name: 'lokasi') String? location,
-    @JsonKey(name: 'image_url') String? imageUrl,
-    @JsonKey(name: 'is_available') bool? isAvailable,
+    String? namaRumah,
+    String? deskripsi,
+    String? tipeRumah,
+    int? harga,
+    String? lokasi,
+    String? imageUrl,
+    bool? isAvailable,
   }) = _UpdatePropertyRequest;
 
   factory UpdatePropertyRequest.fromJson(Map<String, dynamic> json) =>

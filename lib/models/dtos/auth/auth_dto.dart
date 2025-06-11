@@ -6,20 +6,21 @@ part 'auth_dto.g.dart';
 @freezed
 class UserDto with _$UserDto {
   const factory UserDto({
-    required String id,
+    required int id,
     required String username,
     required String email,
     required String phone,
     required String role,
-    String? address,
-    bool? isVerified,
-    bool? isActive,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    @Default('') String address,
+    @Default(false) bool isVerified,
+    @Default(false) bool isActive,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
   }) = _UserDto;
 
   factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
 }
+
 
 @freezed
 class LoginResponseDto with _$LoginResponseDto {
@@ -53,7 +54,7 @@ class LoginDataDto with _$LoginDataDto {
 @freezed
 class ProfileDto with _$ProfileDto {
   const factory ProfileDto({
-    required String id,
+    required int id,
     required String username,
     required String email,
     required String phone,
@@ -61,8 +62,8 @@ class ProfileDto with _$ProfileDto {
     String? address,
     bool? isVerified,
     bool? isActive,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
   }) = _ProfileDto;
 
   factory ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);
