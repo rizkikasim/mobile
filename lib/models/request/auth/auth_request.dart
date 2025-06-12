@@ -7,9 +7,9 @@ part 'auth_request.g.dart';
 class RegisterRequest with _$RegisterRequest {
   const factory RegisterRequest({
     required String username,
-    String? email,        // opsional sesuai backend
-    String? phone,        // opsional sesuai backend
-    String? password,     // juga bisa opsional
+    String? email,
+    String? phone,
+    String? password,
   }) = _RegisterRequest;
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
@@ -19,7 +19,7 @@ class RegisterRequest with _$RegisterRequest {
 @freezed
 class LoginRequest with _$LoginRequest {
   const factory LoginRequest({
-    required String identifier, // bisa username / email / phone
+    required String identifier,
     required String password,
   }) = _LoginRequest;
 
@@ -42,9 +42,7 @@ class UpdateProfileRequest with _$UpdateProfileRequest {
 
 @freezed
 class SendOtpRequest with _$SendOtpRequest {
-  const factory SendOtpRequest({
-    required String phone,
-  }) = _SendOtpRequest;
+  const factory SendOtpRequest({required String phone}) = _SendOtpRequest;
 
   factory SendOtpRequest.fromJson(Map<String, dynamic> json) =>
       _$SendOtpRequestFromJson(json);
@@ -52,10 +50,8 @@ class SendOtpRequest with _$SendOtpRequest {
 
 @freezed
 class VerifyOtpRequest with _$VerifyOtpRequest {
-  const factory VerifyOtpRequest({
-    required String phone,
-    required String otp,
-  }) = _VerifyOtpRequest;
+  const factory VerifyOtpRequest({required String phone, required String otp}) =
+      _VerifyOtpRequest;
 
   factory VerifyOtpRequest.fromJson(Map<String, dynamic> json) =>
       _$VerifyOtpRequestFromJson(json);

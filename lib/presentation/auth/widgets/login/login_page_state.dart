@@ -8,6 +8,7 @@ import 'package:propedia/presentation/auth/pages/login_page.dart';
 import 'package:propedia/presentation/auth/pages/register_page.dart';
 import 'package:propedia/presentation/auth/widgets/login/login_input_field.dart';
 import 'package:propedia/presentation/auth/widgets/login/social_login_button.dart';
+import 'package:propedia/presentation/auth/widgets/notify/custom_notification_card.dart';
 import 'package:propedia/presentation/home/pages/dashboard_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,13 +16,12 @@ class LoginPageState extends State<LoginPage> {
   final TextEditingController _identifierController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
-  bool _rememberMe = false;
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus(); // ✅ Cek apakah sudah login
+    _checkLoginStatus();
   }
 
   Future<void> _checkLoginStatus() async {
@@ -39,13 +39,45 @@ class LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _showSnackBar(String message, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: color,
-        duration: const Duration(seconds: 2),
-      ),
+  void _showSnackBar(
+    String message,
+    Color color, {
+    String? title,
+    IconData? icon,
+  }) {
+    Color? indicatorColor;
+    Color? textColor;
+    Color? backgroundColor;
+
+    if (color == Colors.red) {
+      indicatorColor = Colors.red;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Error';
+    } else if (color == Colors.green) {
+      indicatorColor = Colors.green;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Sukses';
+    } else if (color == Colors.blue) {
+      indicatorColor = Colors.blue;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Informasi';
+    } else {
+      indicatorColor = const Color(0xFF8DBCC7);
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Notifikasi';
+    }
+
+    showCustomSnackBar(
+      context,
+      message: message,
+      title: title,
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      indicatorColor: indicatorColor,
     );
   }
 
@@ -54,23 +86,33 @@ class LoginPageState extends State<LoginPage> {
     final password = _passwordController.text;
 
     if (identifier.isEmpty || password.isEmpty) {
-      _showSnackBar('Email/Username/Phone dan Password harus diisi!', Colors.red);
+      _showSnackBar(
+        'Email/Username/Phone dan Password harus diisi!',
+        Colors.red,
+        title: 'Input Kurang',
+        icon: Icons.error_outline,
+      );
       return;
     }
 
     context.read<AuthCubit>().login(
-          LoginRequest(identifier: identifier, password: password),
-        );
+      LoginRequest(identifier: identifier, password: password),
+    );
   }
 
   void _onForgotPassword() {
-    _showSnackBar('Fitur lupa password belum diimplementasikan.', Colors.blue);
+    _showSnackBar(
+      'Fitur lupa password belum diimplementasikan.',
+      Colors.blue,
+      title: 'Informasi',
+      icon: Icons.info_outline,
+    );
   }
 
   void _onSignUp() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const RegisterPage()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const RegisterPage()));
   }
 
   @override
@@ -88,24 +130,40 @@ class LoginPageState extends State<LoginPage> {
             },
             authenticated: (user) {
               setState(() => _isLoading = false);
-              _showSnackBar('Login berhasil! Selamat datang, ${user.username}!', Colors.green);
+              _showSnackBar(
+                'Login berhasil! Selamat datang, ${user.username}!',
+                Colors.green,
+                title: 'Berhasil Login!',
+                icon: Icons.check_circle_outline,
+              );
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => DashboardPage(
-                    userName: user.username ?? 'Pengguna',
-                    userEmail: user.email ?? 'email@example.com',
-                    userRole: user.role ?? 'user',
-                  ),
+                  builder:
+                      (context) => DashboardPage(
+                        userName: user.username ?? 'Pengguna',
+                        userEmail: user.email ?? 'email@example.com',
+                        userRole: user.role ?? 'user',
+                      ),
                 ),
               );
             },
             otpSent: () {
               setState(() => _isLoading = false);
-              _showSnackBar('OTP telah dikirim.', Colors.blue);
+              _showSnackBar(
+                'OTP telah dikirim.',
+                Colors.blue,
+                title: 'Kode OTP Terkirim',
+                icon: Icons.message,
+              );
             },
             error: (message) {
               setState(() => _isLoading = false);
-              _showSnackBar('Login gagal: $message', Colors.red);
+              _showSnackBar(
+                'Login gagal: $message',
+                Colors.red,
+                title: 'Gagal Login',
+                icon: Icons.cancel_outlined,
+              );
             },
             loggedOut: () {
               setState(() => _isLoading = false);
@@ -117,36 +175,40 @@ class LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 50.h),
-              Image.asset(
-                'assets/images/pizza_logo.png',
-                height: 100.h,
-                width: 100.w,
-                errorBuilder: (context, error, stackTrace) => Icon(Icons.fastfood, size: 50.w),
+              SizedBox(height: 80.h),
+              Text(
+                'Cari Rumah Impianmu? Atau Kosan Idaman?',
+                style: TextStyle(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.center,
               ),
-              SizedBox(height: 30.h),
-              Text('Welcome to Peppino Pizza',
-                  style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold)),
               SizedBox(height: 10.h),
-              Text('Peppino Pizza handcrafted, and always delicious.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14.sp, color: Colors.grey[600])),
+              Text(
+                'Mulai petualangan propertimu di sini. Dari rumah, apart, tanah, sampai kosan, semua ada!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
+              ),
               SizedBox(height: 40.h),
               LoginInputField(
-                label: 'Email/Username/Phone',
-                hint: 'Enter your Email, Username, or Phone',
+                label: 'Masukin Email Kamu',
+                hint: 'kamu@gmail.com',
                 controller: _identifierController,
                 keyboardType: TextInputType.text,
               ),
               SizedBox(height: 20.h),
               LoginInputField(
                 label: 'Password',
-                hint: 'Enter Password',
+                hint: 'Isi Password',
                 controller: _passwordController,
                 obscureText: !_isPasswordVisible,
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                     color: Colors.grey,
                   ),
                   onPressed: () {
@@ -158,40 +220,42 @@ class LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 10.h),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: _rememberMe,
-                        onChanged: (value) => setState(() => _rememberMe = value ?? false),
-                        activeColor: const Color(0xFFFF6B00),
-                      ),
-                      Text('Remember me', style: TextStyle(fontSize: 13.sp)),
-                    ],
-                  ),
                   TextButton(
                     onPressed: _onForgotPassword,
-                    child: Text('Forgot Password?',
-                        style: TextStyle(fontSize: 13.sp, color: const Color(0xFFFF6B00))),
+                    child: Text(
+                      'Lupa Password?',
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: const Color(0xFF8DBCC7),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 10.h),
               SizedBox(
                 width: double.infinity,
                 height: 50.h,
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _onLoginPressed,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF6B00),
+                    backgroundColor: const Color(0xFF8DBCC7),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                   ),
-                  child: _isLoading
-                      ? CircularProgressIndicator(color: Colors.white)
-                      : Text('Login', style: TextStyle(fontSize: 18.sp, color: Colors.white)),
+                  child:
+                      _isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                            'Masuk Sekarang',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              color: Colors.white,
+                            ),
+                          ),
                 ),
               ),
               SizedBox(height: 30.h),
@@ -200,8 +264,13 @@ class LoginPageState extends State<LoginPage> {
                   Expanded(child: Divider()),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: Text('Or continue with',
-                        style: TextStyle(fontSize: 12.sp, color: Colors.grey[600])),
+                    child: Text(
+                      'Atau masuk dengan',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.grey[600],
+                      ),
+                    ),
                   ),
                   Expanded(child: Divider()),
                 ],
@@ -210,25 +279,34 @@ class LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SocialLoginButton(imagePath: 'assets/icons/google.png', onTap: () {}),
+                  SocialLoginButton(
+                    imagePath: 'assets/icons/search.png',
+                    onTap: () {},
+                  ),
                   SizedBox(width: 20.w),
-                  SocialLoginButton(imagePath: 'assets/icons/apple.png', onTap: () {}),
+                  SocialLoginButton(
+                    imagePath: 'assets/icons/facebook.png',
+                    onTap: () {},
+                  ),
                   SizedBox(width: 20.w),
-                  SocialLoginButton(imagePath: 'assets/icons/facebook.png', onTap: () {}),
+                  SocialLoginButton(
+                    imagePath: 'assets/icons/twitter.png',
+                    onTap: () {},
+                  ),
                 ],
               ),
               SizedBox(height: 40.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Don\'t have an account? ', style: TextStyle(fontSize: 14.sp)),
+                  Text('Belum punya akun? ', style: TextStyle(fontSize: 14.sp)),
                   GestureDetector(
                     onTap: _onSignUp,
                     child: Text(
-                      'Sign up',
+                      'Daftar Yuk!',
                       style: TextStyle(
                         fontSize: 14.sp,
-                        color: const Color(0xFFFF6B00),
+                        color: const Color(0xFF8DBCC7),
                         fontWeight: FontWeight.w500,
                       ),
                     ),

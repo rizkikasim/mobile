@@ -62,13 +62,13 @@ class _PropertiesApiService implements PropertiesApiService {
   }
 
   @override
-  Future<List<PropertyTypeDto>> getPropertyTypes(String token) async {
+  Future<PropertyTypeResponseDto> getPropertyTypes(String token) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<PropertyTypeDto>>(Options(
+    final _options = _setStreamType<PropertyTypeResponseDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -84,13 +84,10 @@ class _PropertiesApiService implements PropertiesApiService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<PropertyTypeDto> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PropertyTypeResponseDto _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) =>
-              PropertyTypeDto.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = PropertyTypeResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

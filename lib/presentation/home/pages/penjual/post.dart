@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:propedia/presentation/home/cubit/property_cubit.dart';
 import 'package:propedia/presentation/home/cubit/property_state.dart';
-import 'package:propedia/models/dtos/stores/properties_dto.dart';
 import 'package:propedia/presentation/home/widgets/penjual/custom_text_field.dart';
 import 'package:propedia/presentation/home/widgets/penjual/floating_action_button_area.dart';
 import 'package:propedia/models/request/stores/property_request.dart';
@@ -27,7 +26,7 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
   final TextEditingController _deskripsiController = TextEditingController();
   final TextEditingController _lokasiController = TextEditingController();
 
-  List<PropertyTypeDto> _houseTypes = [];
+  List<String> _houseTypes = [];
   bool _loadingTypes = true;
 
   @override
@@ -72,8 +71,10 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Pilih Tipe Rumah',
-                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: darkText)),
+                  Text(
+                    'Pilih Tipe Rumah',
+                    style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: darkText),
+                  ),
                   IconButton(
                     icon: Icon(Icons.close, size: 24.w, color: Colors.grey),
                     onPressed: () => Navigator.pop(context),
@@ -96,19 +97,19 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
                     final type = _houseTypes[index];
                     return ListTile(
                       title: Text(
-                        type.name,
+                        type,
                         style: TextStyle(
                           fontSize: 16.sp,
-                          color: _tipeRumahController.text == type.name ? primaryOrange : darkText,
-                          fontWeight: _tipeRumahController.text == type.name ? FontWeight.bold : FontWeight.normal,
+                          color: _tipeRumahController.text == type ? primaryOrange : darkText,
+                          fontWeight: _tipeRumahController.text == type ? FontWeight.bold : FontWeight.normal,
                         ),
                       ),
-                      trailing: _tipeRumahController.text == type.name
+                      trailing: _tipeRumahController.text == type
                           ? Icon(Icons.check, color: primaryOrange, size: 20.w)
                           : null,
                       onTap: () {
                         setState(() {
-                          _tipeRumahController.text = type.name;
+                          _tipeRumahController.text = type;
                         });
                         Navigator.pop(context);
                       },
@@ -124,13 +125,50 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
   }
 
   Future<void> _submit() async {
+    final namaRumah = _namaRumahController.text.trim();
+    final hargaText = _hargaController.text.trim();
+    final tipeRumah = _tipeRumahController.text.trim();
+    final deskripsi = _deskripsiController.text.trim();
+    final lokasi = _lokasiController.text.trim();
+
+    if (namaRumah.isEmpty ||
+        hargaText.isEmpty ||
+        tipeRumah.isEmpty ||
+        deskripsi.isEmpty ||
+        lokasi.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Semua field harus diisi.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    final harga = int.tryParse(hargaText);
+    if (harga == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Harga harus berupa angka yang valid.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    debugPrint('📤 Submitting property...');
+    debugPrint('Nama: $namaRumah');
+    debugPrint('Harga: $harga');
+    debugPrint('Tipe: $tipeRumah');
+    debugPrint('Deskripsi: $deskripsi');
+    debugPrint('Lokasi: $lokasi');
+
     final request = CreatePropertyRequest(
-      namaRumah: _namaRumahController.text,
-      harga: int.tryParse(_hargaController.text) ?? 0,
-      tipeRumah: _tipeRumahController.text,
-      deskripsi: _deskripsiController.text,
-      lokasi: _lokasiController.text,
-      imageUrl: null,
+      namaRumah: namaRumah,
+      harga: harga,
+      tipeRumah: tipeRumah,
+      deskripsi: deskripsi,
+      lokasi: lokasi,
     );
 
     final prefs = await SharedPreferences.getInstance();
@@ -138,7 +176,10 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
 
     if (token == null || token.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Token tidak ditemukan. Login ulang!'), backgroundColor: Colors.red),
+        const SnackBar(
+          content: Text('Token tidak ditemukan. Login ulang!'),
+          backgroundColor: Colors.red,
+        ),
       );
       return;
     }
@@ -164,15 +205,19 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
               const SnackBar(content: Text('Mengirim data properti...')),
             );
           },
-          created: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('Postingan properti berhasil dibuat!'),
-                backgroundColor: primaryOrange,
-              ),
-            );
-            _resetForm();
-          },
+created: (property) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: const Text('Postingan properti berhasil dibuat!'),
+      backgroundColor: primaryOrange,
+    ),
+  );
+  _resetForm();
+
+  // Optional: debugPrint data properti
+  debugPrint("🆕 Properti ID: ${property.propertyId}");
+},
+
           error: (message) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -188,8 +233,14 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              title: Text('Buat Postingan Baru',
-                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold, color: darkText)),
+              title: Text(
+                'Buat Postingan Baru',
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                  color: darkText,
+                ),
+              ),
               centerTitle: true,
               backgroundColor: Colors.white,
               elevation: 0,
@@ -208,8 +259,14 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Detail Properti',
-                        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold, color: darkText)),
+                    Text(
+                      'Detail Properti',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: darkText,
+                      ),
+                    ),
                     SizedBox(height: 15.h),
                     CustomTextField(
                       label: 'Nama Rumah',
@@ -251,9 +308,7 @@ class _PostPenjualanPageState extends State<PostPenjualanPage> {
             ),
           ],
         ),
-        bottomNavigationBar: FloatingActionButtonArea(
-          onPressed: _submit,
-        ),
+        bottomNavigationBar: FloatingActionButtonArea(onPressed: _submit),
       ),
     );
   }

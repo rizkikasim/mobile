@@ -1,4 +1,3 @@
-// lib/presentation/home/widgets/snack_item_card.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -45,8 +44,6 @@ class SnackItemCard extends StatelessWidget {
     return Container(
       width: 180.w,
       height: 230.h,
-      // HAPUS MARGIN DARI SINI
-      // margin: EdgeInsets.only(right: 15.w), // <--- HAPUS BARIS INI
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15.r),
@@ -66,8 +63,7 @@ class SnackItemCard extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(15.r)),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(15.r)),
                 child: Image.asset(
                   productImageUrl,
                   height: 120.h,

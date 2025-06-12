@@ -13,7 +13,7 @@ class FlashSaleShimmer extends StatelessWidget {
       child: Container(
         width: 150.w,
         decoration: BoxDecoration(
-          color: Colors.white, // Warna dasar shimmer
+          color: Colors.white,
           borderRadius: BorderRadius.circular(15.r),
           boxShadow: [
             BoxShadow(
@@ -27,7 +27,6 @@ class FlashSaleShimmer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Placeholder Gambar
             Container(
               height: 90.h,
               width: double.infinity,
@@ -41,37 +40,21 @@ class FlashSaleShimmer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Placeholder Nama Produk
                   Container(
                     width: double.infinity,
                     height: 13.h,
                     color: Colors.white,
                     margin: EdgeInsets.only(bottom: 5.h),
                   ),
-                  Container(
-                    width: 100.w,
-                    height: 13.h,
-                    color: Colors.white,
-                  ),
+                  Container(width: 100.w, height: 13.h, color: Colors.white),
                   SizedBox(height: 5.h),
 
-                  // Placeholder Harga Asli
-                  Container(
-                    width: 60.w,
-                    height: 11.h,
-                    color: Colors.white,
-                  ),
+                  Container(width: 60.w, height: 11.h, color: Colors.white),
                   SizedBox(height: 2.h),
 
-                  // Placeholder Harga Diskon
-                  Container(
-                    width: 80.w,
-                    height: 14.h,
-                    color: Colors.white,
-                  ),
+                  Container(width: 80.w, height: 14.h, color: Colors.white),
                   SizedBox(height: 8.h),
 
-                  // Placeholder Progress Bar
                   Container(
                     width: double.infinity,
                     height: 10.h,

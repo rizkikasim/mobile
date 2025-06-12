@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FloatingActionButtonArea extends StatelessWidget {
   final VoidCallback onPressed;
 
-  // Warna utama aplikasi
   static const Color primaryOrange = Color(0xFFFF6B00);
 
   const FloatingActionButtonArea({super.key, required this.onPressed});
@@ -15,12 +14,10 @@ class FloatingActionButtonArea extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 15.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        // --- PERUBAHAN DI SINI: BorderRadius.only ---
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.r),
           topRight: Radius.circular(20.r),
         ),
-        // --- AKHIR PERUBAHAN ---
         border: Border(
           top: BorderSide(color: Colors.grey.shade200, width: 1.0.h),
         ),

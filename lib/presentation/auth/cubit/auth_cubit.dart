@@ -166,31 +166,57 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> verifyOtp(VerifyOtpRequest request) async {
-    emit(const AuthState.loading());
-    try {
-      final httpResponse = await _authApi.verifyOtp(request.toJson());
-      if (httpResponse.response.statusCode == 200 ||
-          httpResponse.response.statusCode == 201) {
-        emit(const AuthState.loggedOut());
-      } else {
-        emit(
-          AuthState.error(
-            httpResponse.response.statusMessage ?? "OTP verifikasi gagal",
-          ),
+Future<void> verifyOtp(VerifyOtpRequest request) async {
+  emit(const AuthState.loading());
+  try {
+    final httpResponse = await _authApi.verifyOtp(request.toJson());
+    if (httpResponse.response.statusCode == 200) {
+      final data = httpResponse.data;
+
+      final token = data['token'];
+      final userJson = data['user'];
+
+      if (token != null && userJson != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString("access_token", token);
+        await prefs.setString("user_id", userJson['id'].toString());
+
+        final user = UserDto(
+          id: userJson['id'],
+          username: userJson['username'],
+          email: userJson['email'],
+          phone: userJson['phone'],
+          role: userJson['role'],
+          address: userJson['address'] ?? '',
+          isVerified: true,
+          isActive: true,
+          createdAt: userJson['created_at'],
+          updatedAt: userJson['updated_at'],
         );
+
+        emit(AuthState.authenticated(user));
+      } else {
+        emit(const AuthState.error("Verifikasi gagal: data tidak lengkap."));
       }
-    } catch (e) {
-      String errorMessage = "OTP verifikasi gagal: ${e.toString()}";
-      if (e is DioException && e.response?.data is Map) {
-        errorMessage =
-            e.response!.data['message'] ??
-            e.response!.statusMessage ??
-            errorMessage;
-      }
-      emit(AuthState.error(errorMessage));
+    } else {
+      emit(
+        AuthState.error(
+          httpResponse.response.statusMessage ?? "OTP verifikasi gagal",
+        ),
+      );
     }
+  } catch (e) {
+    String errorMessage = "OTP verifikasi gagal: ${e.toString()}";
+    if (e is DioException && e.response?.data is Map) {
+      errorMessage =
+          e.response!.data['message'] ??
+          e.response!.statusMessage ??
+          errorMessage;
+    }
+    emit(AuthState.error(errorMessage));
   }
+}
+
 
   Future<void> checkLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();

@@ -9,7 +9,10 @@ class PropertyState with _$PropertyState {
   const factory PropertyState.loading() = _Loading;
   const factory PropertyState.success(List<PropertyDto> properties) = _Success;
   const factory PropertyState.detail(PropertyDto property) = _Detail;
-  const factory PropertyState.created() = _Created;
+
+  /// ✅ Bawa data properti yang baru dibuat
+  const factory PropertyState.created(PropertyDto property) = _Created;
+
   const factory PropertyState.updated() = _Updated;
   const factory PropertyState.deleted() = _Deleted;
   const factory PropertyState.error(String message) = _Error;

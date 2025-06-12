@@ -6,11 +6,10 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final int maxLines;
   final TextInputType keyboardType;
-  final TextEditingController? controller; // Tambahkan controller
-  final bool readOnly; // Tambahkan readOnly
-  final VoidCallback? onTap; // Tambahkan onTap
+  final TextEditingController? controller;
+  final bool readOnly;
+  final VoidCallback? onTap;
 
-  // Warna utama aplikasi
   static const Color primaryOrange = Color(0xFFFF6B00);
   static const Color darkText = Color(0xFF2C3E50);
 
@@ -20,9 +19,9 @@ class CustomTextField extends StatelessWidget {
     required this.hint,
     this.maxLines = 1,
     this.keyboardType = TextInputType.text,
-    this.controller, // Inisialisasi controller
-    this.readOnly = false, // Default: tidak readOnly
-    this.onTap, // Inisialisasi onTap
+    this.controller,
+    this.readOnly = false,
+    this.onTap,
   });
 
   @override
@@ -40,11 +39,11 @@ class CustomTextField extends StatelessWidget {
         ),
         SizedBox(height: 10.h),
         TextField(
-          controller: controller, // Gunakan controller yang diberikan
+          controller: controller,
           keyboardType: keyboardType,
           maxLines: maxLines,
-          readOnly: readOnly, // Atur readOnly
-          onTap: onTap, // Atur onTap
+          readOnly: readOnly,
+          onTap: onTap,
           style: TextStyle(fontSize: 16.sp, color: darkText),
           decoration: InputDecoration(
             hintText: hint,
@@ -63,7 +62,10 @@ class CustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.r),
               borderSide: const BorderSide(color: primaryOrange, width: 2.0),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20.w,
+              vertical: 16.h,
+            ),
           ),
         ),
       ],

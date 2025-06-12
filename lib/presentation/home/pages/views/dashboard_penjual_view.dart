@@ -6,6 +6,9 @@ import 'package:propedia/presentation/home/pages/logic/dashboard_logic.dart';
 import 'package:propedia/presentation/home/widgets/custom_bottom_navigation_bar.dart';
 import 'package:propedia/presentation/home/widgets/menu_section.dart';
 import 'package:propedia/presentation/home/pages/penjual/post.dart';
+import 'package:propedia/presentation/home/widgets/penjual/discover_new.dart';
+import 'package:propedia/presentation/home/widgets/penjual/post_card.dart';
+import 'package:propedia/presentation/home/widgets/penjual/post_feeds.dart';
 import 'package:propedia/presentation/home/widgets/snack_item_shimmer.dart';
 
 class DashboardPenjualView extends StatelessWidget {
@@ -65,10 +68,10 @@ class DashboardPenjualView extends StatelessWidget {
                             MaterialPageRoute(
                               builder:
                                   (context) => ProfilePage(
-                                userName: userName,
-                                userEmail: userEmail,
-                                userRole: userRole,
-                              ),
+                                    userName: userName,
+                                    userEmail: userEmail,
+                                    userRole: userRole,
+                                  ),
                             ),
                           );
                         },
@@ -83,10 +86,10 @@ class DashboardPenjualView extends StatelessWidget {
                           child:
                               defaultProfileImageUrl.isEmpty
                                   ? Icon(
-                                      Icons.person,
-                                      size: 25.w,
-                                      color: Colors.white,
-                                    )
+                                    Icons.person,
+                                    size: 25.w,
+                                    color: Colors.white,
+                                  )
                                   : null,
                           backgroundColor:
                               defaultProfileImageUrl.isEmpty
@@ -132,48 +135,63 @@ class DashboardPenjualView extends StatelessWidget {
             SizedBox(height: 10.h),
             dashboardLogic.isLoadingHomePage
                 ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: const MenuSectionShimmer(),
-                  )
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: const MenuSectionShimmer(),
+                )
                 : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: MenuSection(
-                      allMenuItems: dashboardLogic.allMenuItems,
-                      onItemTap: (index) {
-                        dashboardLogic.onMenuItemTapped(context, index);
-                      },
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: MenuSection(
+                    allMenuItems: dashboardLogic.allMenuItems,
+                    onItemTap: (index) {
+                      dashboardLogic.onMenuItemTapped(context, index);
+                    },
                   ),
-            SizedBox(height: 10.h), // Spasi setelah MenuSection
+                ),
+            SizedBox(height: 10.h),
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Row(
                 children: [
                   Expanded(
-                    child: GestureDetector( // Wrap with GestureDetector for tap
+                    child: GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const PostPenjualanPage()),
+                          MaterialPageRoute(
+                            builder: (context) => const PostPenjualanPage(),
+                          ),
                         );
                       },
                       child: _buildActionButton(
-                        Icons.add_box_outlined, // Icon baru untuk postingan
-                        'Buat Postingan\nBaru', // Teks untuk tombol
+                        Icons.add_box_outlined,
+                        'Buat Postingan\nBaru',
                       ),
                     ),
                   ),
-                  SizedBox(width: 15.w), // Spasi antar tombol, jika ada tombol lain
+                  SizedBox(width: 15.w),
                   Expanded(
-                    child: _buildActionButton(
-                      Icons.lightbulb_outline,
-                      'Discover\nNew Deals!',
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DiscoverNewPage(),
+                          ),
+                        );
+                      },
+                      child: _buildActionButton(
+                        Icons.lightbulb_outline,
+                        'Discover\nNew Deals!',
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 10.h),
+
+            const PostCardFeeds(),
           ],
         ),
       ),

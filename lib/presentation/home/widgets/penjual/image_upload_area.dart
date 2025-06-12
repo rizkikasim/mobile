@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ImageUploadArea extends StatelessWidget {
   const ImageUploadArea({super.key});
 
-  // Warna utama aplikasi
   static const Color primaryOrange = Color(0xFFFF6B00);
   static const Color darkText = Color(0xFF2C3E50);
   static const Color lightGreyText = Color(0xFF7F8C8D);
@@ -30,28 +29,21 @@ class ImageUploadArea extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.cloud_upload_outlined,
-            size: 60.w,
-            color: primaryOrange, // Menggunakan definisi lokal
-          ),
+          Icon(Icons.cloud_upload_outlined, size: 60.w, color: primaryOrange),
           SizedBox(height: 12.h),
           Text(
             'Ketuk untuk Tambahkan Foto Produk',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16.sp,
-              color: darkText, // Menggunakan definisi lokal
+              color: darkText,
               fontWeight: FontWeight.w600,
             ),
           ),
           SizedBox(height: 8.h),
           Text(
             'Maksimal 5 foto (ukuran maks. 2MB/foto)',
-            style: TextStyle(
-              fontSize: 13.sp,
-              color: lightGreyText, // Menggunakan definisi lokal
-            ),
+            style: TextStyle(fontSize: 13.sp, color: lightGreyText),
           ),
         ],
       ),

@@ -12,9 +12,8 @@ _$CreatePropertyRequestImpl _$$CreatePropertyRequestImplFromJson(
       namaRumah: json['namaRumah'] as String,
       deskripsi: json['deskripsi'] as String,
       tipeRumah: json['tipeRumah'] as String,
-      harga: (json['harga'] as num).toInt(),
+      harga: (json['harga'] as num?)?.toInt(),
       lokasi: json['lokasi'] as String,
-      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$$CreatePropertyRequestImplToJson(
@@ -25,7 +24,6 @@ Map<String, dynamic> _$$CreatePropertyRequestImplToJson(
       'tipeRumah': instance.tipeRumah,
       'harga': instance.harga,
       'lokasi': instance.lokasi,
-      'imageUrl': instance.imageUrl,
     };
 
 _$UpdatePropertyRequestImpl _$$UpdatePropertyRequestImplFromJson(
@@ -36,7 +34,6 @@ _$UpdatePropertyRequestImpl _$$UpdatePropertyRequestImplFromJson(
       tipeRumah: json['tipeRumah'] as String?,
       harga: (json['harga'] as num?)?.toInt(),
       lokasi: json['lokasi'] as String?,
-      imageUrl: json['imageUrl'] as String?,
       isAvailable: json['isAvailable'] as bool?,
     );
 
@@ -48,6 +45,5 @@ Map<String, dynamic> _$$UpdatePropertyRequestImplToJson(
       'tipeRumah': instance.tipeRumah,
       'harga': instance.harga,
       'lokasi': instance.lokasi,
-      'imageUrl': instance.imageUrl,
       'isAvailable': instance.isAvailable,
     };

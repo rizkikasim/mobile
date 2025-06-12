@@ -22,7 +22,7 @@ mixin _$PropertyState {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -34,7 +34,7 @@ mixin _$PropertyState {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -46,7 +46,7 @@ mixin _$PropertyState {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
@@ -158,7 +158,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -173,7 +173,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -188,7 +188,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
@@ -299,7 +299,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -314,7 +314,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -329,7 +329,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
@@ -475,7 +475,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -490,7 +490,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -505,7 +505,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
@@ -664,7 +664,7 @@ class _$DetailImpl implements _Detail {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -679,7 +679,7 @@ class _$DetailImpl implements _Detail {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -694,7 +694,7 @@ class _$DetailImpl implements _Detail {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
@@ -773,6 +773,10 @@ abstract class _$$CreatedImplCopyWith<$Res> {
   factory _$$CreatedImplCopyWith(
           _$CreatedImpl value, $Res Function(_$CreatedImpl) then) =
       __$$CreatedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PropertyDto property});
+
+  $PropertyDtoCopyWith<$Res> get property;
 }
 
 /// @nodoc
@@ -785,26 +789,62 @@ class __$$CreatedImplCopyWithImpl<$Res>
 
   /// Create a copy of PropertyState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? property = null,
+  }) {
+    return _then(_$CreatedImpl(
+      null == property
+          ? _value.property
+          : property // ignore: cast_nullable_to_non_nullable
+              as PropertyDto,
+    ));
+  }
+
+  /// Create a copy of PropertyState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PropertyDtoCopyWith<$Res> get property {
+    return $PropertyDtoCopyWith<$Res>(_value.property, (value) {
+      return _then(_value.copyWith(property: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$CreatedImpl implements _Created {
-  const _$CreatedImpl();
+  const _$CreatedImpl(this.property);
+
+  @override
+  final PropertyDto property;
 
   @override
   String toString() {
-    return 'PropertyState.created()';
+    return 'PropertyState.created(property: $property)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$CreatedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$CreatedImpl &&
+            (identical(other.property, property) ||
+                other.property == property));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, property);
+
+  /// Create a copy of PropertyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreatedImplCopyWith<_$CreatedImpl> get copyWith =>
+      __$$CreatedImplCopyWithImpl<_$CreatedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -813,12 +853,12 @@ class _$CreatedImpl implements _Created {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
   }) {
-    return created();
+    return created(property);
   }
 
   @override
@@ -828,12 +868,12 @@ class _$CreatedImpl implements _Created {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
   }) {
-    return created?.call();
+    return created?.call(property);
   }
 
   @override
@@ -843,14 +883,14 @@ class _$CreatedImpl implements _Created {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (created != null) {
-      return created();
+      return created(property);
     }
     return orElse();
   }
@@ -906,7 +946,15 @@ class _$CreatedImpl implements _Created {
 }
 
 abstract class _Created implements PropertyState {
-  const factory _Created() = _$CreatedImpl;
+  const factory _Created(final PropertyDto property) = _$CreatedImpl;
+
+  PropertyDto get property;
+
+  /// Create a copy of PropertyState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CreatedImplCopyWith<_$CreatedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -954,7 +1002,7 @@ class _$UpdatedImpl implements _Updated {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -969,7 +1017,7 @@ class _$UpdatedImpl implements _Updated {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -984,7 +1032,7 @@ class _$UpdatedImpl implements _Updated {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
@@ -1095,7 +1143,7 @@ class _$DeletedImpl implements _Deleted {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -1110,7 +1158,7 @@ class _$DeletedImpl implements _Deleted {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -1125,7 +1173,7 @@ class _$DeletedImpl implements _Deleted {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,
@@ -1263,7 +1311,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function() loading,
     required TResult Function(List<PropertyDto> properties) success,
     required TResult Function(PropertyDto property) detail,
-    required TResult Function() created,
+    required TResult Function(PropertyDto property) created,
     required TResult Function() updated,
     required TResult Function() deleted,
     required TResult Function(String message) error,
@@ -1278,7 +1326,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? loading,
     TResult? Function(List<PropertyDto> properties)? success,
     TResult? Function(PropertyDto property)? detail,
-    TResult? Function()? created,
+    TResult? Function(PropertyDto property)? created,
     TResult? Function()? updated,
     TResult? Function()? deleted,
     TResult? Function(String message)? error,
@@ -1293,7 +1341,7 @@ class _$ErrorImpl implements _Error {
     TResult Function()? loading,
     TResult Function(List<PropertyDto> properties)? success,
     TResult Function(PropertyDto property)? detail,
-    TResult Function()? created,
+    TResult Function(PropertyDto property)? created,
     TResult Function()? updated,
     TResult Function()? deleted,
     TResult Function(String message)? error,

@@ -1,4 +1,4 @@
-import 'dart:convert'; // Untuk jsonEncode dan jsonDecode
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,14 +11,16 @@ class DioClient {
   }
 
   DioClient._internal() {
-    dio = Dio(BaseOptions(
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 15),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    ));
+    dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 15),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      ),
+    );
 
     if (kDebugMode) {
       dio.interceptors.add(
@@ -40,12 +42,16 @@ class DioClient {
     }
   }
 
-  // --- Helper untuk mencetak log yang cantik ---
-
   void _printRequestLog(RequestOptions options) {
-    debugPrint('╔════════════════════════════════════════════════════════════════════════╗');
-    debugPrint('║                                  API Request                             ║');
-    debugPrint('╠════════════════════════════════════════════════════════════════════════╣');
+    debugPrint(
+      '╔════════════════════════════════════════════════════════════════════════╗',
+    );
+    debugPrint(
+      '║                                  API Request                             ║',
+    );
+    debugPrint(
+      '╠════════════════════════════════════════════════════════════════════════╣',
+    );
     debugPrint('║ Method: ${options.method.padRight(7)} ${options.uri}');
     debugPrint('║ Headers:');
     options.headers.forEach((key, value) {
@@ -59,28 +65,44 @@ class DioClient {
         debugPrint('║ Request Body: ${options.data}');
       }
     }
-    debugPrint('╚════════════════════════════════════════════════════════════════════════╝');
+    debugPrint(
+      '╚════════════════════════════════════════════════════════════════════════╝',
+    );
   }
 
   void _printResponseLog(Response response) {
-    debugPrint('╔════════════════════════════════════════════════════════════════════════╗');
-    debugPrint('║                                 API Response                             ║');
-    debugPrint('╠════════════════════════════════════════════════════════════════════════╣');
+    debugPrint(
+      '╔════════════════════════════════════════════════════════════════════════╗',
+    );
+    debugPrint(
+      '║                                 API Response                             ║',
+    );
+    debugPrint(
+      '╠════════════════════════════════════════════════════════════════════════╣',
+    );
     debugPrint('║ URL: ${response.requestOptions.uri}');
     debugPrint('║ Status: ${response.statusCode} ${response.statusMessage}');
     debugPrint('║ Response Body:');
     try {
-      debugPrint('║   ${_prettifyJson(response.data)}'); // Ini yang paling penting!
+      debugPrint('║   ${_prettifyJson(response.data)}');
     } catch (e) {
       debugPrint('║   ${response.data}');
     }
-    debugPrint('╚════════════════════════════════════════════════════════════════════════╝');
+    debugPrint(
+      '╚════════════════════════════════════════════════════════════════════════╝',
+    );
   }
 
   void _printErrorLog(DioException e) {
-    debugPrint('╔════════════════════════════════════════════════════════════════════════╗');
-    debugPrint('║                                  API Error                               ║');
-    debugPrint('╠════════════════════════════════════════════════════════════════════════╣');
+    debugPrint(
+      '╔════════════════════════════════════════════════════════════════════════╗',
+    );
+    debugPrint(
+      '║                                  API Error                               ║',
+    );
+    debugPrint(
+      '╠════════════════════════════════════════════════════════════════════════╣',
+    );
     debugPrint('║ URL: ${e.requestOptions.uri}');
     debugPrint('║ Type: ${e.type}');
     debugPrint('║ Message: ${e.message}');
@@ -93,19 +115,19 @@ class DioClient {
         debugPrint('║   ${e.response?.data}');
       }
     }
-    debugPrint('╚════════════════════════════════════════════════════════════════════════╝');
+    debugPrint(
+      '╚════════════════════════════════════════════════════════════════════════╝',
+    );
   }
 
-  // Helper untuk memformat JSON agar lebih mudah dibaca
   String _prettifyJson(dynamic json) {
     if (json == null) return 'null';
     try {
-      // Pastikan json adalah String jika sudah diencode, atau Map/List jika belum
       final object = (json is String) ? jsonDecode(json) : json;
-      const JsonEncoder encoder = JsonEncoder.withIndent('  '); // Indentasi 2 spasi
+      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
       return encoder.convert(object);
     } catch (e) {
-      return json.toString(); // Jika bukan JSON yang valid, kembalikan apa adanya
+      return json.toString();
     }
   }
 }

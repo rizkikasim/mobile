@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:propedia/models/dtos/stores/properties_dto.dart';
 import 'package:propedia/models/request/stores/property_request.dart';
@@ -22,6 +23,7 @@ class PropertyCubit extends Cubit<PropertyState> {
 
       emit(PropertyState.success(result));
     } catch (e) {
+      debugPrint('❌ Error fetchAllProperties: $e');
       emit(PropertyState.error("Gagal ambil properti: ${e.toString()}"));
     }
   }
@@ -34,19 +36,29 @@ class PropertyCubit extends Cubit<PropertyState> {
           : await _api.getPropertyDetail(role, propertyId, 'Bearer $token');
       emit(PropertyState.detail(property));
     } catch (e) {
+      debugPrint('❌ Error getDetail: $e');
       emit(PropertyState.error("Gagal ambil detail: ${e.toString()}"));
     }
   }
 
-  Future<void> create(String role, CreatePropertyRequest request, String? token) async {
-    emit(const PropertyState.loading());
-    try {
-      await _api.createProperty(role, request, 'Bearer $token');
-      emit(const PropertyState.created());
-    } catch (e) {
-      emit(PropertyState.error("Gagal buat properti: ${e.toString()}"));
-    }
+Future<void> create(String role, CreatePropertyRequest request, String? token) async {
+  emit(const PropertyState.loading());
+  try {
+    final response = await _api.createProperty(role, request, 'Bearer $token');
+
+    // ✅ Logging isi respon
+    debugPrint("✅ Property created:");
+    debugPrint("📦 JSON: ${response.toJson()}");
+
+    // response is already a PropertyDto, langsung emit
+    emit(PropertyState.created(response));
+  } catch (e, stack) {
+    debugPrint("❌ Gagal createProperty: $e");
+    debugPrint("📌 Stacktrace: $stack");
+    emit(PropertyState.error("Gagal buat properti: ${e.toString()}"));
   }
+}
+
 
   Future<void> update(String role, String propertyId, UpdatePropertyRequest request, String? token) async {
     emit(const PropertyState.loading());
@@ -54,6 +66,7 @@ class PropertyCubit extends Cubit<PropertyState> {
       await _api.updateProperty(role, propertyId, request, 'Bearer $token');
       emit(const PropertyState.updated());
     } catch (e) {
+      debugPrint('❌ Error updateProperty: $e');
       emit(PropertyState.error("Gagal update properti: ${e.toString()}"));
     }
   }
@@ -64,14 +77,18 @@ class PropertyCubit extends Cubit<PropertyState> {
       await _api.deleteProperty(role, propertyId, 'Bearer $token');
       emit(const PropertyState.deleted());
     } catch (e) {
+      debugPrint('❌ Error deleteProperty: $e');
       emit(PropertyState.error("Gagal hapus properti: ${e.toString()}"));
     }
   }
 
-  Future<List<PropertyTypeDto>> getPropertyTypes(String? token) async {
+  Future<List<String>> getPropertyTypes(String? token) async {
     try {
-      return await _api.getPropertyTypes('Bearer $token');
+      final result = await _api.getPropertyTypes('Bearer $token');
+      debugPrint("📦 getPropertyTypes: ${result.types}");
+      return result.types;
     } catch (e) {
+      debugPrint('❌ Error getPropertyTypes: $e');
       throw Exception('Gagal ambil tipe properti: $e');
     }
   }

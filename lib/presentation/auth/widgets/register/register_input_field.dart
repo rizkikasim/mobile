@@ -10,14 +10,14 @@ class RegisterInputField extends StatelessWidget {
   final Widget? suffixIcon;
 
   const RegisterInputField({
-    super.key,
+    Key? key,
     required this.label,
     required this.hint,
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.suffixIcon,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +47,14 @@ class RegisterInputField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+              borderSide: BorderSide(color: Color(0xFFA4CCD9), width: 1.0),
             ),
             contentPadding: EdgeInsets.symmetric(
               vertical: 14.h,

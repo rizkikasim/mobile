@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart'; // Untuk format mata uang
+import 'package:intl/intl.dart';
 
 class FlashSaleCard extends StatelessWidget {
   final String productImageUrl;
@@ -8,7 +8,7 @@ class FlashSaleCard extends StatelessWidget {
   final double originalPrice;
   final double discountedPrice;
   final int remainingStock;
-  final double progress; // Progres penjualan (0.0 - 1.0)
+  final double progress;
 
   const FlashSaleCard({
     super.key,
@@ -76,7 +76,6 @@ class FlashSaleCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Nama Produk
                 Text(
                   productName,
                   style: TextStyle(
@@ -89,7 +88,6 @@ class FlashSaleCard extends StatelessWidget {
                 ),
                 SizedBox(height: 5.h),
 
-                // Harga Asli (dicoret)
                 Text(
                   _formatPrice(originalPrice),
                   style: TextStyle(
@@ -100,7 +98,6 @@ class FlashSaleCard extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
 
-                // Harga Diskon
                 Text(
                   _formatPrice(discountedPrice),
                   style: TextStyle(
@@ -111,7 +108,6 @@ class FlashSaleCard extends StatelessWidget {
                 ),
                 SizedBox(height: 8.h),
 
-                // Progress Bar dan Sisa Stok
                 Stack(
                   children: [
                     Container(

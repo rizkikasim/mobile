@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:propedia/presentation/auth/cubit/auth_cubit.dart';
 import 'package:propedia/presentation/auth/cubit/auth_state.dart';
 import 'package:propedia/presentation/auth/pages/login_page.dart';
+// Impor CustomNotificationCard dan showCustomSnackBar
+import 'package:propedia/presentation/auth/widgets/notify/custom_notification_card.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userName;
@@ -22,23 +24,75 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  // Fungsi _showSnackBar yang sama seperti di LoginPageState
+  void _showSnackBar(String message, Color color, {String? title}) {
+    Color? indicatorColor;
+    Color? textColor;
+    Color? backgroundColor;
+
+    // Menentukan warna berdasarkan 'color' yang diberikan
+    if (color == Colors.red) {
+      indicatorColor = Colors.red;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Error';
+    } else if (color == Colors.green) {
+      indicatorColor = Colors.green;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Sukses';
+    } else if (color == Colors.blue) {
+      indicatorColor = Colors.blue;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Informasi';
+    } else {
+      indicatorColor = Theme.of(context).primaryColor;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Notifikasi';
+    }
+
+    showCustomSnackBar(
+      context,
+      message: message,
+      title: title,
+      // icon: icon, // Tidak ada ikon sesuai permintaan sebelumnya
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      indicatorColor: indicatorColor,
+      // customBoxShadow, titleStyle, messageStyle bisa ditambahkan jika perlu
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         state.whenOrNull(
           loggedOut: () {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) => const LoginPage()),
-              (route) => false,
+            // Tampilkan CustomNotificationCard setelah logout berhasil
+            _showSnackBar(
+              'Anda telah berhasil keluar dari akun.',
+              Colors.green,
+              title: 'Berhasil Logout!',
             );
+            // Kemudian navigasi setelah notifikasi muncul (beri sedikit jeda jika diperlukan)
+            Future.delayed(const Duration(seconds: 1), () { // Memberi waktu notifikasi muncul
+              if (context.mounted) { // Pastikan widget masih mounted
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const LoginPage()),
+                  (route) => false,
+                );
+              }
+            });
           },
           error: (message) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Logout gagal: $message'),
-                backgroundColor: Colors.red,
-              ),
+            // Mengganti SnackBar default dengan CustomNotificationCard
+            _showSnackBar(
+              'Logout gagal: $message',
+              Colors.red,
+              title: 'Gagal Logout',
             );
           },
         );
@@ -202,28 +256,98 @@ class _ProfilePageState extends State<ProfilePage> {
           icon: Icons.compare_arrows,
           text: 'Keluar',
           onTap: () {
-            showDialog(
+            // Memanggil showDialog kustom yang disederhanakan
+            showGeneralDialog(
               context: context,
-              builder:
-                  (_) => AlertDialog(
-                    title: const Text("Keluar Aplikasi"),
-                    content: const Text(
-                      "Apakah kamu yakin ingin keluar dari akun ini?",
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("Batal"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          context.read<AuthCubit>().logout();
-                        },
-                        child: const Text("Keluar"),
-                      ),
-                    ],
+              barrierDismissible: true,
+              barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+              barrierColor: Colors.black.withOpacity(0.5),
+              transitionDuration: const Duration(milliseconds: 300),
+              transitionBuilder: (context, animation, secondaryAnimation, child) {
+                return ScaleTransition(
+                  scale: CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutBack,
                   ),
+                  child: child,
+                );
+              },
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return Center(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.w),
+                    padding: EdgeInsets.all(24.r),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 15,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Apakah kamu yakin ingin keluar dari akun ini?",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.grey[800],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 24.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey[200],
+                                  foregroundColor: Colors.black87,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                ),
+                                child: Text(
+                                  "Batal",
+                                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 15.w),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  context.read<AuthCubit>().logout();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFFFF6B00),
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                ),
+                                child: Text(
+                                  "Keluar",
+                                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),

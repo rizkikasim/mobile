@@ -7,17 +7,15 @@ part 'properties_dto.g.dart';
 class PropertyDto with _$PropertyDto {
   const factory PropertyDto({
     int? id,
-    String? propertyId,
-    required int userId,
-    required String namaRumah,
-    required int harga,
-    required String tipeRumah,
-    required String deskripsi,
-    required String lokasi,
-    String? imageUrl,
-    @Default(false) bool isAvailable,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    @JsonKey(name: 'property_id') String? propertyId,
+    @JsonKey(name: 'user_id') int? userId,
+    @JsonKey(name: 'nama_rumah') String? namaRumah,
+    @JsonKey(name: 'harga') int? harga,
+    @JsonKey(name: 'tipe_rumah') String? tipeRumah,
+    String? deskripsi,
+    String? lokasi,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
   }) = _PropertyDto;
 
   factory PropertyDto.fromJson(Map<String, dynamic> json) =>
@@ -25,14 +23,13 @@ class PropertyDto with _$PropertyDto {
 }
 
 @freezed
-class PropertyTypeDto with _$PropertyTypeDto {
-  const factory PropertyTypeDto({
-    required String id,
-    required String name,
-  }) = _PropertyTypeDto;
+class PropertyTypeResponseDto with _$PropertyTypeResponseDto {
+  const factory PropertyTypeResponseDto({
+    required List<String> types,
+  }) = _PropertyTypeResponseDto;
 
-  factory PropertyTypeDto.fromJson(Map<String, dynamic> json) =>
-      _$PropertyTypeDtoFromJson(json);
+  factory PropertyTypeResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$PropertyTypeResponseDtoFromJson(json);
 }
 
 @freezed

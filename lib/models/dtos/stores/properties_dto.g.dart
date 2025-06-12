@@ -9,51 +9,45 @@ part of 'properties_dto.dart';
 _$PropertyDtoImpl _$$PropertyDtoImplFromJson(Map<String, dynamic> json) =>
     _$PropertyDtoImpl(
       id: (json['id'] as num?)?.toInt(),
-      propertyId: json['propertyId'] as String?,
-      userId: (json['userId'] as num).toInt(),
-      namaRumah: json['namaRumah'] as String,
-      harga: (json['harga'] as num).toInt(),
-      tipeRumah: json['tipeRumah'] as String,
-      deskripsi: json['deskripsi'] as String,
-      lokasi: json['lokasi'] as String,
-      imageUrl: json['imageUrl'] as String?,
-      isAvailable: json['isAvailable'] as bool? ?? false,
-      createdAt: json['createdAt'] == null
+      propertyId: json['property_id'] as String?,
+      userId: (json['user_id'] as num?)?.toInt(),
+      namaRumah: json['nama_rumah'] as String?,
+      harga: (json['harga'] as num?)?.toInt(),
+      tipeRumah: json['tipe_rumah'] as String?,
+      deskripsi: json['deskripsi'] as String?,
+      lokasi: json['lokasi'] as String?,
+      createdAt: json['created_at'] == null
           ? null
-          : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
           ? null
-          : DateTime.parse(json['updatedAt'] as String),
+          : DateTime.parse(json['updated_at'] as String),
     );
 
 Map<String, dynamic> _$$PropertyDtoImplToJson(_$PropertyDtoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'propertyId': instance.propertyId,
-      'userId': instance.userId,
-      'namaRumah': instance.namaRumah,
+      'property_id': instance.propertyId,
+      'user_id': instance.userId,
+      'nama_rumah': instance.namaRumah,
       'harga': instance.harga,
-      'tipeRumah': instance.tipeRumah,
+      'tipe_rumah': instance.tipeRumah,
       'deskripsi': instance.deskripsi,
       'lokasi': instance.lokasi,
-      'imageUrl': instance.imageUrl,
-      'isAvailable': instance.isAvailable,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-_$PropertyTypeDtoImpl _$$PropertyTypeDtoImplFromJson(
+_$PropertyTypeResponseDtoImpl _$$PropertyTypeResponseDtoImplFromJson(
         Map<String, dynamic> json) =>
-    _$PropertyTypeDtoImpl(
-      id: json['id'] as String,
-      name: json['name'] as String,
+    _$PropertyTypeResponseDtoImpl(
+      types: (json['types'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$PropertyTypeDtoImplToJson(
-        _$PropertyTypeDtoImpl instance) =>
+Map<String, dynamic> _$$PropertyTypeResponseDtoImplToJson(
+        _$PropertyTypeResponseDtoImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
+      'types': instance.types,
     };
 
 _$CreatePropertyResponseDtoImpl _$$CreatePropertyResponseDtoImplFromJson(

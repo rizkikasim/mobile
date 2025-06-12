@@ -5,13 +5,9 @@ import 'package:propedia/presentation/home/widgets/transfer_method_card.dart';
 
 class MenuSection extends StatelessWidget {
   final List<Map<String, dynamic>> allMenuItems;
-  final Function(int index)? onItemTap; // <--- TAMBAH: Callback untuk menangani tap item
+  final Function(int index)? onItemTap;
 
-  const MenuSection({
-    super.key,
-    required this.allMenuItems,
-    this.onItemTap, // <--- TAMBAH: Inisialisasi callback
-  });
+  const MenuSection({super.key, required this.allMenuItems, this.onItemTap});
 
   void _showAllCategoriesBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -130,11 +126,10 @@ class MenuSection extends StatelessWidget {
                         subtitle: subtitle,
                         iconColor: item['iconColor'],
                         onTap: () {
-                          // <--- MODIFIKASI: Panggil callback onTap utama jika ada
                           if (onItemTap != null) {
                             onItemTap!(index);
                           }
-                          Navigator.pop(context); // Tutup bottom sheet setelah klik
+                          Navigator.pop(context);
                           debugPrint(
                             '${item['title']} tapped from Bottom Sheet',
                           );
@@ -153,7 +148,6 @@ class MenuSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Hanya menampilkan 4 item pertama di grid utama
     final displayedItems = allMenuItems.take(4).toList();
 
     return Container(
@@ -182,14 +176,13 @@ class MenuSection extends StatelessWidget {
             mainAxisSpacing: 10.h,
             children:
                 displayedItems.map((item) {
-                  final index = allMenuItems.indexOf(item); // Dapatkan index asli
+                  final index = allMenuItems.indexOf(item);
                   return MenuItemCard(
                     icon: item['icon'],
                     title: item['title'],
                     iconColor: item['iconColor'],
                     backgroundColor: item['backgroundColor'],
                     onTap: () {
-                      // <--- MODIFIKASI: Panggil callback onTap utama jika ada
                       if (onItemTap != null) {
                         onItemTap!(index);
                       }

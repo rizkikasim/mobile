@@ -1,7 +1,6 @@
-// lib/presentation/home/widgets/snack_item_shimmer.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart'; // Import shimmer
+import 'package:shimmer/shimmer.dart';
 
 class SnackItemShimmer extends StatelessWidget {
   const SnackItemShimmer({Key? key}) : super(key: key);
@@ -9,44 +8,37 @@ class SnackItemShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!, // Warna dasar shimmer
-      highlightColor: Colors.grey[100]!, // Warna highlight shimmer
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
       child: Container(
         width: 120.w,
         margin: EdgeInsets.only(right: 15.w),
         decoration: BoxDecoration(
-          color: Colors.white, // Background putih untuk placeholder
+          color: Colors.white,
           borderRadius: BorderRadius.circular(15.r),
           border: Border.all(color: Colors.grey[200]!),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Placeholder untuk gambar
             Container(
               height: 100.h,
               width: double.infinity,
-              color: Colors.white, // Warna "gambar" dalam shimmer
-              margin: EdgeInsets.zero, // Pastikan tidak ada margin yang mengganggu
+              color: Colors.white,
+              margin: EdgeInsets.zero,
             ),
             Padding(
               padding: EdgeInsets.all(8.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Placeholder untuk judul
                   Container(
-                    width: 80.w, // Lebar placeholder teks
+                    width: 80.w,
                     height: 13.sp,
                     color: Colors.white,
                     margin: EdgeInsets.only(bottom: 5.h),
                   ),
-                  // Placeholder untuk subtitle
-                  Container(
-                    width: 60.w, // Lebar placeholder teks
-                    height: 11.sp,
-                    color: Colors.white,
-                  ),
+                  Container(width: 60.w, height: 11.sp, color: Colors.white),
                 ],
               ),
             ),
@@ -57,8 +49,6 @@ class SnackItemShimmer extends StatelessWidget {
   }
 }
 
-// Anda juga bisa membuat shimmer untuk bagian lain jika diperlukan,
-// contohnya untuk MenuSection atau ActionButton.
 class MenuSectionShimmer extends StatelessWidget {
   const MenuSectionShimmer({Key? key}) : super(key: key);
 
@@ -74,9 +64,9 @@ class MenuSectionShimmer extends StatelessWidget {
           crossAxisCount: 4,
           crossAxisSpacing: 10.w,
           mainAxisSpacing: 10.h,
-          childAspectRatio: 0.8, // Sesuaikan dengan rasio MenuItemCard Anda
+          childAspectRatio: 0.8,
         ),
-        itemCount: 8, // Tampilkan beberapa item shimmer
+        itemCount: 8,
         itemBuilder: (context, index) {
           return Container(
             decoration: BoxDecoration(
@@ -95,11 +85,7 @@ class MenuSectionShimmer extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.h),
-                Container(
-                  width: 60.w,
-                  height: 12.sp,
-                  color: Colors.white,
-                ),
+                Container(width: 60.w, height: 12.sp, color: Colors.white),
               ],
             ),
           );

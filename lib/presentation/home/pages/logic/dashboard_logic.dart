@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:propedia/presentation/home/pages/rumah/rumah_addition.dart';
+import 'package:propedia/presentation/home/pages/rumah/content_page.dart';
 
 class DashboardLogic {
   final VoidCallback onUpdate;
-  // Tambahkan callback untuk navigasi
-  final Function(Widget page) onNavigate; // Menerima sebuah Widget (halaman) untuk dinavigasi
+  final Function(Widget page) onNavigate;
 
-  DashboardLogic({required this.onUpdate, required this.onNavigate}); // Perbarui konstruktor
+  DashboardLogic({required this.onUpdate, required this.onNavigate});
 
   int _selectedIndex = 0;
   bool _isLoadingHomePage = true;
@@ -26,29 +25,30 @@ class DashboardLogic {
     'assets/images/onboarding_1.jpeg',
   ];
 
-  // Data rumah kita akan tetap di dalam DashboardLogic (misalnya sebagai Map)
-  // Ini adalah data yang akan diteruskan ke RumahAdditionPage
   final List<Map<String, dynamic>> _dummyHousesData = [
     {
-      'imageUrl': 'assets/images/house_1.jpg', // Pastikan gambar ini ada di assets
+      'imageUrl': 'assets/images/house_1.jpg',
       'title': 'Rumah Minimalis Modern',
-      'description': 'Rumah nyaman di pusat kota Bandung dengan 3 kamar tidur, 2 kamar mandi, dan taman pribadi. Ideal untuk keluarga kecil. Berada di lingkungan yang tenang dan dekat dengan fasilitas umum.',
+      'description':
+          'Rumah nyaman di pusat kota Bandung dengan 3 kamar tidur, 2 kamar mandi, dan taman pribadi. Ideal untuk keluarga kecil. Berada di lingkungan yang tenang dan dekat dengan fasilitas umum.',
       'tipeRumah': 'rumah',
       'harga': 1500000000.0,
       'lokasi': 'Bandung, Jawa Barat',
     },
     {
-      'imageUrl': 'assets/images/house_2.jpg', // Pastikan gambar ini ada di assets
+      'imageUrl': 'assets/images/house_2.jpg',
       'title': 'Apartemen Mewah Pusat Kota',
-      'description': 'Apartemen studio modern dengan pemandangan kota Jakarta yang menakjubkan. Dilengkapi fasilitas lengkap seperti kolam renang, gym, dan keamanan 24 jam. Cocok untuk profesional muda.',
+      'description':
+          'Apartemen studio modern dengan pemandangan kota Jakarta yang menakjubkan. Dilengkapi fasilitas lengkap seperti kolam renang, gym, dan keamanan 24 jam. Cocok untuk profesional muda.',
       'tipeRumah': 'apartemen',
       'harga': 2200000000.0,
       'lokasi': 'Jakarta, DKI Jakarta',
     },
     {
-      'imageUrl': 'assets/images/house_3.jpg', // Pastikan gambar ini ada di assets
+      'imageUrl': 'assets/images/house_3.jpg',
       'title': 'Villa dengan Pemandangan Danau',
-      'description': 'Villa dua lantai yang luas dengan kolam renang pribadi dan pemandangan langsung ke danau di Bogor. Lingkungan asri dan cocok untuk liburan atau tempat tinggal jangka panjang.',
+      'description':
+          'Villa dua lantai yang luas dengan kolam renang pribadi dan pemandangan langsung ke danau di Bogor. Lingkungan asri dan cocok untuk liburan atau tempat tinggal jangka panjang.',
       'tipeRumah': 'villa',
       'harga': 3800000000.0,
       'lokasi': 'Bogor, Jawa Barat',
@@ -61,7 +61,7 @@ class DashboardLogic {
       'title': 'Rumah',
       'iconColor': Colors.blue.shade600,
       'backgroundColor': Colors.blue.shade50,
-      'type': 'house', // Tambahkan identifier type
+      'type': 'house',
     },
     {
       'icon': Icons.landscape_outlined,
@@ -146,10 +146,7 @@ class DashboardLogic {
   bool get isLoadingHomePage => _isLoadingHomePage;
   Duration get countdownRemaining => _countdownRemaining;
   String get flashSaleStatusText => _flashSaleStatusText;
-  // Mengubah nearbyHouses untuk mengembalikan List<Map<String, dynamic>>
   List<Map<String, dynamic>> get nearbyHouses => _dummyHousesData;
-  // Mengubah flashSaleItems untuk mengembalikan List<Map<String, dynamic>>
-  // Anda harus membuat data dummy untuk flash sale jika belum ada
   List<Map<String, dynamic>> get flashSaleItems => [
     {
       'imageUrl': 'assets/images/flash_sale_house_1.jpg',
@@ -176,7 +173,6 @@ class DashboardLogic {
       'progress': 0.3,
     },
   ];
-
 
   void init() {
     _loadHomePageContent();
@@ -251,17 +247,13 @@ class DashboardLogic {
     debugPrint('Navigating to Filter Page');
   }
 
-  // Metode baru untuk menangani klik pada menu item
   void onMenuItemTapped(BuildContext context, int index) {
     final selectedMenuItem = allMenuItems[index];
     if (selectedMenuItem['type'] == 'house') {
-      // Navigasi ke RumahAdditionPage
     } else {
-      // Handle untuk jenis menu item lainnya
       debugPrint('Tapped on ${selectedMenuItem['title']}');
-      // Anda bisa menambahkan navigasi ke halaman lain di sini
     }
-    onUpdate(); // Perbarui UI jika ada perubahan state internal (misal, selectedIndex)
+    onUpdate();
   }
 
   void onItemTapped(int index) {

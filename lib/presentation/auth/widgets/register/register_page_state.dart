@@ -10,6 +10,7 @@ import 'package:propedia/presentation/auth/pages/register_page.dart';
 import 'package:propedia/presentation/auth/widgets/register/register_input_field.dart';
 import 'package:propedia/presentation/auth/widgets/register/user_type_selector.dart';
 import 'package:propedia/presentation/auth/widgets/utils/register_utils.dart';
+import 'package:propedia/presentation/auth/widgets/notify/custom_notification_card.dart';
 
 class RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
@@ -52,6 +53,43 @@ class RegisterPageState extends State<RegisterPage> {
     });
   }
 
+  void _showSnackBar(String message, Color color, {String? title}) {
+    Color? indicatorColor;
+    Color? textColor;
+    Color? backgroundColor;
+
+    if (color == Colors.red) {
+      indicatorColor = Colors.red;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Error';
+    } else if (color == Colors.green) {
+      indicatorColor = Colors.green;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Sukses';
+    } else if (color == Colors.blue) {
+      indicatorColor = Colors.blue;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Informasi';
+    } else {
+      indicatorColor = Theme.of(context).primaryColor;
+      backgroundColor = Colors.white;
+      textColor = Colors.black87;
+      title = title ?? 'Notifikasi';
+    }
+
+    showCustomSnackBar(
+      context,
+      message: message,
+      title: title,
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      indicatorColor: indicatorColor,
+    );
+  }
+
   void _onRegisterPressed() {
     final username = _usernameController.text;
     final email = _emailController.text;
@@ -64,17 +102,29 @@ class RegisterPageState extends State<RegisterPage> {
         phone.isEmpty ||
         password.isEmpty ||
         confirmPassword.isEmpty) {
-      _showSnackBar('Semua field harus diisi!', Colors.red);
+      _showSnackBar(
+        'Semua field harus diisi!',
+        Colors.red,
+        title: 'Input Tidak Lengkap',
+      );
       return;
     }
 
     if (password != confirmPassword) {
-      _showSnackBar('Password tidak cocok!', Colors.red);
+      _showSnackBar(
+        'Password tidak cocok!',
+        Colors.red,
+        title: 'Password Tidak Cocok',
+      );
       return;
     }
 
     if (!_agreeToTerms) {
-      _showSnackBar('Mohon setujui syarat dan ketentuan.', Colors.red);
+      _showSnackBar(
+        'Mohon setujui syarat dan ketentuan.',
+        Colors.red,
+        title: 'Persetujuan Diperlukan',
+      );
       return;
     }
 
@@ -82,6 +132,7 @@ class RegisterPageState extends State<RegisterPage> {
       _showSnackBar(
         'Mohon pilih jenis akun (Penjual, Admin, atau Pembeli)!',
         Colors.red,
+        title: 'Jenis Akun Diperlukan',
       );
       return;
     }
@@ -109,16 +160,6 @@ class RegisterPageState extends State<RegisterPage> {
     Navigator.of(context).pop();
   }
 
-  void _showSnackBar(String message, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: color,
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,53 +175,74 @@ class RegisterPageState extends State<RegisterPage> {
                 builder:
                     (ctx) => Center(
                       child: CircularProgressIndicator(
-                        color: const Color(0xFFFF6B00),
+                        color: Color(0xFF8DBCC7),
                       ),
                     ),
               );
             },
             authenticated: (user) {
               Navigator.pop(context);
-              _showSnackBar('Anda sudah login!', Colors.blue);
+              _showSnackBar(
+                'Anda sudah login!',
+                Colors.blue,
+                title: 'Sudah Login',
+              );
             },
             otpSent: () {
               Navigator.pop(context);
               _showSnackBar(
                 'Registrasi berhasil! OTP telah dikirim.',
                 Colors.green,
+                title: 'Registrasi Berhasil',
               );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => OtpPage(
-                        phone: _phoneController.text,
-                        userName: _usernameController.text,
-                        userEmail: _emailController.text,
-                        userRole: _selectedUserType.first.name,
-                      ),
-                ),
-              );
+              Future.delayed(const Duration(seconds: 1), () {
+                if (context.mounted) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => OtpPage(
+                            phone: _phoneController.text,
+                            userName: _usernameController.text,
+                            userEmail: _emailController.text,
+                            userRole: _selectedUserType.first.name,
+                          ),
+                    ),
+                  );
+                }
+              });
             },
             error: (message) {
               Navigator.pop(context);
-              _showSnackBar('Error: $message', Colors.red);
+              _showSnackBar(
+                'Error: $message',
+                Colors.red,
+                title: 'Registrasi Gagal',
+              );
             },
             loggedOut: () {
               Navigator.pop(context);
-              _showSnackBar('Akun berhasil didaftarkan!', Colors.green);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => OtpPage(
-                        phone: _phoneController.text,
-                        userName: _usernameController.text,
-                        userEmail: _emailController.text,
-                        userRole: _selectedUserType.first.name,
-                      ),
-                ),
+              _showSnackBar(
+                'Akun berhasil didaftarkan!',
+                Colors.green,
+                title: 'Pendaftaran Selesai',
               );
+              Future.delayed(const Duration(seconds: 1), () {
+                if (context.mounted) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => OtpPage(
+                            phone: _phoneController.text,
+                            userName: _usernameController.text,
+                            userEmail: _emailController.text,
+                            userRole: _selectedUserType.first.name,
+                          ),
+                    ),
+                  );
+                }
+              });
             },
           );
         },
@@ -189,50 +251,20 @@ class RegisterPageState extends State<RegisterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.black,
-                      size: 20.w,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ),
-              ),
+              SizedBox(height: 50.h),
 
-              Image.asset(
-                'assets/images/pizza_logo.png',
-                height: 80.h,
-                width: 80.w,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    height: 80.h,
-                    width: 80.w,
-                    color: Colors.grey[200],
-                    child: Icon(
-                      Icons.fastfood,
-                      size: 40.w,
-                      color: Colors.grey[500],
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 20.h),
               Text(
-                'Create New Account',
+                'Yuk, Join Komunitas Properti! 🏡',
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 10.h),
               Text(
-                'Please fill out the form below to create your account.',
+                'Daftar sekarang dan dapetin akses eksklusif buat nyari rumah, kos, tanah, apart, atau hotel impianmu. Gak cuma itu, kamu juga bisa jadi bestie properti bareng kita!',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
               ),
@@ -295,6 +327,17 @@ class RegisterPageState extends State<RegisterPage> {
                     borderRadius: BorderRadius.circular(10.r),
                     borderSide: BorderSide.none,
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                    borderSide: BorderSide(
+                      color: Color(0xFFA4CCD9),
+                      width: 1.0,
+                    ),
+                  ),
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 14.h,
                     horizontal: 16.w,
@@ -328,7 +371,7 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
 
               Align(
                 alignment: Alignment.centerLeft,
@@ -352,6 +395,17 @@ class RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.r),
                     borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                    borderSide: BorderSide(
+                      color: Color(0xFFA4CCD9),
+                      width: 1.0,
+                    ),
                   ),
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 14.h,
@@ -386,7 +440,7 @@ class RegisterPageState extends State<RegisterPage> {
                           _agreeToTerms = value ?? false;
                         });
                       },
-                      activeColor: const Color(0xFFFF6B00),
+                      activeColor: Color(0xFF8DBCC7),
                       side: const BorderSide(color: Colors.grey),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.r),
@@ -415,7 +469,7 @@ class RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   onPressed: _onRegisterPressed,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF6B00),
+                    backgroundColor: Color(0xFF8DBCC7),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.r),
                     ),
@@ -455,14 +509,14 @@ class RegisterPageState extends State<RegisterPage> {
                       'Login now',
                       style: TextStyle(
                         fontSize: 14.sp,
-                        color: const Color(0xFFFF6B00),
+                        color: Color(0xFF8DBCC7),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 40.h),
+              SizedBox(height: 20.h),
             ],
           ),
         ),

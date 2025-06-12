@@ -19,7 +19,7 @@ abstract class PropertiesApiService {
   );
 
   @GET('/api/property-types')
-  Future<List<PropertyTypeDto>> getPropertyTypes(
+  Future<PropertyTypeResponseDto> getPropertyTypes(
     @Header('Authorization') String token,
   );
 
