@@ -10,8 +10,9 @@ import 'package:propedia/presentation/home/widgets/penjual/discover_new.dart';
 import 'package:propedia/presentation/home/widgets/penjual/post_card.dart';
 import 'package:propedia/presentation/home/widgets/penjual/post_feeds.dart';
 import 'package:propedia/presentation/home/widgets/snack_item_shimmer.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
-class DashboardPenjualView extends StatelessWidget {
+class DashboardPenjualView extends StatefulWidget {
   final String userName;
   final String userEmail;
   final String userRole;
@@ -26,6 +27,20 @@ class DashboardPenjualView extends StatelessWidget {
   });
 
   @override
+  State<DashboardPenjualView> createState() => _DashboardPenjualViewState();
+}
+
+class _DashboardPenjualViewState extends State<DashboardPenjualView> {
+  final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey =
+      GlobalKey<LiquidPullToRefreshState>();
+
+  Future<void> _handleRefresh() async {
+    debugPrint('Refreshing data...');
+    await Future.delayed(const Duration(milliseconds: 1500));
+    debugPrint('Refresh complete!');
+  }
+
+  @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
       _buildHomePageContent(context),
@@ -36,10 +51,10 @@ class DashboardPenjualView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: pages[dashboardLogic.selectedIndex],
+      body: pages[widget.dashboardLogic.selectedIndex],
       bottomNavigationBar: CustomBottomNavigationBar(
-        selectedIndex: dashboardLogic.selectedIndex,
-        onItemTapped: dashboardLogic.onItemTapped,
+        selectedIndex: widget.dashboardLogic.selectedIndex,
+        onItemTapped: widget.dashboardLogic.onItemTapped,
       ),
     );
   }
@@ -49,150 +64,160 @@ class DashboardPenjualView extends StatelessWidget {
         'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
 
     return SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 10.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
+      child: LiquidPullToRefresh(
+        key: _refreshIndicatorKey,
+        onRefresh: _handleRefresh,
+        showChildOpacityTransition: false,
+        color: const Color(0xFFFF6B00),
+        backgroundColor: Colors.white,
+        height: 100,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(vertical: 10.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => ProfilePage(
+                                      userName: widget.userName,
+                                      userEmail: widget.userEmail,
+                                      userRole: widget.userRole,
+                                    ),
+                              ),
+                            );
+                          },
+                          child: CircleAvatar(
+                            radius: 25.w,
+                            backgroundImage: NetworkImage(
+                              defaultProfileImageUrl,
+                            ),
+                            onBackgroundImageError: (exception, stackTrace) {
+                              debugPrint(
+                                'Error loading profile image: $exception',
+                              );
+                            },
+                            child:
+                                defaultProfileImageUrl.isEmpty
+                                    ? Icon(
+                                      Icons.person,
+                                      size: 25.w,
+                                      color: Colors.white,
+                                    )
+                                    : null,
+                            backgroundColor:
+                                defaultProfileImageUrl.isEmpty
+                                    ? Colors.grey[300]
+                                    : null,
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.dashboardLogic.getGreeting(),
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                            Text(
+                              widget.userName,
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.notifications_none,
+                        size: 28.w,
+                        color: Colors.grey[700],
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
+              widget.dashboardLogic.isLoadingHomePage
+                  ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: const MenuSectionShimmer(),
+                  )
+                  : Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: MenuSection(
+                      allMenuItems: widget.dashboardLogic.allMenuItems,
+                      onItemTap: (index) {
+                        widget.dashboardLogic.onMenuItemTapped(context, index);
+                      },
+                    ),
+                  ),
+              SizedBox(height: 10.h),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder:
-                                  (context) => ProfilePage(
-                                    userName: userName,
-                                    userEmail: userEmail,
-                                    userRole: userRole,
-                                  ),
+                              builder: (context) => const PostPenjualanPage(),
                             ),
                           );
                         },
-                        child: CircleAvatar(
-                          radius: 25.w,
-                          backgroundImage: NetworkImage(defaultProfileImageUrl),
-                          onBackgroundImageError: (exception, stackTrace) {
-                            debugPrint(
-                              'Error loading profile image: $exception',
-                            );
-                          },
-                          child:
-                              defaultProfileImageUrl.isEmpty
-                                  ? Icon(
-                                    Icons.person,
-                                    size: 25.w,
-                                    color: Colors.white,
-                                  )
-                                  : null,
-                          backgroundColor:
-                              defaultProfileImageUrl.isEmpty
-                                  ? Colors.grey[300]
-                                  : null,
+                        child: _buildActionButton(
+                          Icons.add_box_outlined,
+                          'Buat Postingan\nBaru',
                         ),
                       ),
-                      SizedBox(width: 10.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            dashboardLogic.getGreeting(),
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                          Text(
-                            userName,
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.notifications_none,
-                      size: 28.w,
-                      color: Colors.grey[700],
                     ),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20.h),
-            SizedBox(height: 10.h),
-            dashboardLogic.isLoadingHomePage
-                ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: const MenuSectionShimmer(),
-                )
-                : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: MenuSection(
-                    allMenuItems: dashboardLogic.allMenuItems,
-                    onItemTap: (index) {
-                      dashboardLogic.onMenuItemTapped(context, index);
-                    },
-                  ),
+                    SizedBox(width: 15.w),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DiscoverNewPage(),
+                            ),
+                          );
+                        },
+                        child: _buildActionButton(
+                          Icons.lightbulb_outline,
+                          'Discover\nNew Deals!',
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-            SizedBox(height: 10.h),
-
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PostPenjualanPage(),
-                          ),
-                        );
-                      },
-                      child: _buildActionButton(
-                        Icons.add_box_outlined,
-                        'Buat Postingan\nBaru',
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 15.w),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const DiscoverNewPage(),
-                          ),
-                        );
-                      },
-                      child: _buildActionButton(
-                        Icons.lightbulb_outline,
-                        'Discover\nNew Deals!',
-                      ),
-                    ),
-                  ),
-                ],
               ),
-            ),
-            SizedBox(height: 10.h),
+              SizedBox(height: 10.h),
 
-            const PostCardFeeds(),
-          ],
+              const PostCardFeeds(),
+            ],
+          ),
         ),
       ),
     );

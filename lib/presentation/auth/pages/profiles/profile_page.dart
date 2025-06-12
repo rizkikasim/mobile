@@ -238,6 +238,16 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildSettingsList() {
     return Column(
       children: [
+        // New "Buat Toko" menu item
+        _buildSettingsItem(
+          icon: Icons.store, // Icon untuk toko
+          text: 'Buat Toko',
+          onTap: () {
+            debugPrint('Buat Toko clicked');
+            // Tambahkan navigasi atau logika untuk membuat toko di sini
+            // Contoh: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateShopPage()));
+          },
+        ),
         _buildSettingsItem(
           icon: Icons.edit_note,
           text: 'Bahasa',
