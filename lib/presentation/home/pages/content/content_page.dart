@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:propedia/presentation/home/pages/content/detail_content.dart';
 
 class ContentPage extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class ContentPage extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/onboarding_1.jpeg', // Ganti dengan gambar properti Anda
+              'assets/images/onboarding_1.jpeg',
               fit: BoxFit.cover,
             ),
           ),
@@ -56,7 +57,7 @@ class ContentPage extends StatelessWidget {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          // Handle back button
+                          Navigator.pop(context);
                         },
                       ),
                     ),
@@ -72,9 +73,7 @@ class ContentPage extends StatelessWidget {
                               Icons.bookmark_outline,
                               color: Colors.white,
                             ),
-                            onPressed: () {
-                              // Handle bookmark button
-                            },
+                            onPressed: () {},
                           ),
                         ),
                         SizedBox(width: 10),
@@ -85,9 +84,7 @@ class ContentPage extends StatelessWidget {
                           ),
                           child: IconButton(
                             icon: Icon(Icons.share, color: Colors.white),
-                            onPressed: () {
-                              // Handle share button
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       ],
@@ -107,7 +104,7 @@ class ContentPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Rumah Impian Minimalis', // Judul properti
+                      'Rumah Impian Minimalis',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -128,16 +125,16 @@ class ContentPage extends StatelessWidget {
                                   radius: 12,
                                   backgroundColor: Colors.grey[300],
                                   backgroundImage: AssetImage(
-                                    'assets/images/onboarding_2_${index + 1}.jpeg', // Ganti dengan avatar agen/pembeli
+                                    'assets/images/onboarding_2.jpeg',
                                   ),
                                 ),
                               );
                             }),
                           ),
                         ),
-                        SizedBox(width: 20),
+                        SizedBox(width: 10),
                         Text(
-                          '1.234 Orang Melihat', // Jumlah orang yang melihat/tertarik
+                          '1.234 Orang Melihat',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -153,7 +150,7 @@ class ContentPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Tanggal Posting', // Label tanggal
+                              'Tanggal Posting',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[600],
@@ -161,7 +158,7 @@ class ContentPage extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              '12 Juni 2025', // Tanggal posting properti
+                              '12 Juni 2025',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -174,7 +171,7 @@ class ContentPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Luas Tanah', // Label luas tanah
+                              'Luas Tanah',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[600],
@@ -182,7 +179,7 @@ class ContentPage extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              '120 m²', // Luas tanah properti
+                              '120 m²',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -195,7 +192,7 @@ class ContentPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Lokasi', // Label lokasi
+                              'Lokasi',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[600],
@@ -203,7 +200,7 @@ class ContentPage extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              'Jl. Merdeka No. 123\nBandung', // Lokasi properti
+                              'Jl. Merdeka No. 123\nBandung',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -235,7 +232,7 @@ class ContentPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Deskripsi Properti', // Judul deskripsi
+                      'Deskripsi Properti',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -244,7 +241,7 @@ class ContentPage extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Rumah minimalis modern ini berlokasi strategis di pusat kota Bandung, dekat dengan fasilitas umum seperti sekolah, rumah sakit, dan pusat perbelanjaan. Desain interior yang elegan dan pencahayaan alami yang optimal menciptakan suasana hunian yang nyaman. Cocok untuk keluarga muda atau investasi. Jangan lewatkan kesempatan ini!', // Deskripsi properti
+                      'Rumah minimalis modern ini berlokasi strategis di pusat kota Bandung, dekat dengan fasilitas umum seperti sekolah, rumah sakit, dan pusat perbelanjaan. Desain interior yang elegan dan pencahayaan alami yang optimal menciptakan suasana hunian yang nyaman. Cocok untuk keluarga muda atau investasi. Jangan lewatkan kesempatan ini!',
                       style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                     ),
                     SizedBox(height: 30),
@@ -255,7 +252,7 @@ class ContentPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Rp 1.500.000.000', // Harga properti
+                              'Rp 1.500.000.000',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -263,7 +260,7 @@ class ContentPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Tersedia 1 Unit', // Ketersediaan unit
+                              'Tersedia 1 Unit',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey[600],
@@ -273,11 +270,16 @@ class ContentPage extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            // Handle button "Lihat Detail"
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailContentPage(),
+                              ),
+                            );
                           },
                           icon: Icon(Icons.arrow_forward, color: Colors.white),
                           label: Text(
-                            'Lihat Detail', // Teks tombol aksi
+                            'Lihat Detail',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           style: ElevatedButton.styleFrom(
