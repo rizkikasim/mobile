@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:propedia/presentation/home/pages/rumah/content_page.dart';
+import 'package:propedia/presentation/home/pages/content/content_page.dart';
 
 class PostFeed extends StatelessWidget {
   final String title;

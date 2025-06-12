@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:propedia/presentation/home/pages/rumah/content_page.dart';
+import 'package:propedia/presentation/home/pages/content/content_page.dart';
 
 class DashboardLogic {
   final VoidCallback onUpdate;
