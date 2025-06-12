@@ -34,10 +34,21 @@ class _DashboardPenjualViewState extends State<DashboardPenjualView> {
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey =
       GlobalKey<LiquidPullToRefreshState>();
 
+  bool _isRefreshingData = false;
+
   Future<void> _handleRefresh() async {
-    debugPrint('Refreshing data...');
+    debugPrint('Refreshing data (DashboardPenjualView)...');
+
+    setState(() {
+      _isRefreshingData = true;
+    });
+
     await Future.delayed(const Duration(milliseconds: 1500));
-    debugPrint('Refresh complete!');
+
+    setState(() {
+      _isRefreshingData = false;
+    });
+    debugPrint('Refresh complete (DashboardPenjualView)!');
   }
 
   @override
@@ -63,12 +74,16 @@ class _DashboardPenjualViewState extends State<DashboardPenjualView> {
     final String defaultProfileImageUrl =
         'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
 
+    bool showShimmer =
+        _isRefreshingData || widget.dashboardLogic.isLoadingHomePage;
+
     return SafeArea(
       child: LiquidPullToRefresh(
         key: _refreshIndicatorKey,
         onRefresh: _handleRefresh,
         showChildOpacityTransition: false,
-        color: const Color(0xFFFF6B00),
+        // UBAH WARNA REFRESH SESUAI PERMINTAAN: 4DA8DA
+        color: const Color(0xFF4DA8DA), // Warna liquid indicator diubah menjadi 4DA8DA
         backgroundColor: Colors.white,
         height: 100,
         child: SingleChildScrollView(
@@ -110,10 +125,10 @@ class _DashboardPenjualViewState extends State<DashboardPenjualView> {
                             child:
                                 defaultProfileImageUrl.isEmpty
                                     ? Icon(
-                                      Icons.person,
-                                      size: 25.w,
-                                      color: Colors.white,
-                                    )
+                                        Icons.person,
+                                        size: 25.w,
+                                        color: Colors.white,
+                                      )
                                     : null,
                             backgroundColor:
                                 defaultProfileImageUrl.isEmpty
@@ -157,20 +172,20 @@ class _DashboardPenjualViewState extends State<DashboardPenjualView> {
               ),
               SizedBox(height: 20.h),
               SizedBox(height: 10.h),
-              widget.dashboardLogic.isLoadingHomePage
+              showShimmer
                   ? Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: const MenuSectionShimmer(),
-                  )
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: const MenuSectionShimmer(),
+                    )
                   : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: MenuSection(
-                      allMenuItems: widget.dashboardLogic.allMenuItems,
-                      onItemTap: (index) {
-                        widget.dashboardLogic.onMenuItemTapped(context, index);
-                      },
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: MenuSection(
+                        allMenuItems: widget.dashboardLogic.allMenuItems,
+                        onItemTap: (index) {
+                          widget.dashboardLogic.onMenuItemTapped(context, index);
+                        },
+                      ),
                     ),
-                  ),
               SizedBox(height: 10.h),
 
               Padding(
@@ -215,7 +230,20 @@ class _DashboardPenjualViewState extends State<DashboardPenjualView> {
               ),
               SizedBox(height: 10.h),
 
-              const PostCardFeeds(),
+              showShimmer
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        children: List.generate(
+                          3,
+                          (index) => Padding(
+                            padding: EdgeInsets.only(bottom: 10.h),
+                            child: const SnackItemShimmer(),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const PostCardFeeds(),
             ],
           ),
         ),

@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:propedia/presentation/auth/cubit/auth_cubit.dart';
 import 'package:propedia/presentation/auth/cubit/auth_state.dart';
 import 'package:propedia/presentation/auth/pages/login_page.dart';
-// Impor CustomNotificationCard dan showCustomSnackBar
 import 'package:propedia/presentation/auth/widgets/notify/custom_notification_card.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -24,13 +23,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // Fungsi _showSnackBar yang sama seperti di LoginPageState
   void _showSnackBar(String message, Color color, {String? title}) {
     Color? indicatorColor;
     Color? textColor;
     Color? backgroundColor;
 
-    // Menentukan warna berdasarkan 'color' yang diberikan
     if (color == Colors.red) {
       indicatorColor = Colors.red;
       backgroundColor = Colors.white;
@@ -57,11 +54,9 @@ class _ProfilePageState extends State<ProfilePage> {
       context,
       message: message,
       title: title,
-      // icon: icon, // Tidak ada ikon sesuai permintaan sebelumnya
       backgroundColor: backgroundColor,
       textColor: textColor,
       indicatorColor: indicatorColor,
-      // customBoxShadow, titleStyle, messageStyle bisa ditambahkan jika perlu
     );
   }
 
@@ -71,15 +66,13 @@ class _ProfilePageState extends State<ProfilePage> {
       listener: (context, state) {
         state.whenOrNull(
           loggedOut: () {
-            // Tampilkan CustomNotificationCard setelah logout berhasil
             _showSnackBar(
               'Anda telah berhasil keluar dari akun.',
               Colors.green,
               title: 'Berhasil Logout!',
             );
-            // Kemudian navigasi setelah notifikasi muncul (beri sedikit jeda jika diperlukan)
-            Future.delayed(const Duration(seconds: 1), () { // Memberi waktu notifikasi muncul
-              if (context.mounted) { // Pastikan widget masih mounted
+            Future.delayed(const Duration(seconds: 1), () {
+              if (context.mounted) {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (_) => const LoginPage()),
                   (route) => false,
@@ -88,7 +81,6 @@ class _ProfilePageState extends State<ProfilePage> {
             });
           },
           error: (message) {
-            // Mengganti SnackBar default dengan CustomNotificationCard
             _showSnackBar(
               'Logout gagal: $message',
               Colors.red,
@@ -238,14 +230,11 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildSettingsList() {
     return Column(
       children: [
-        // New "Buat Toko" menu item
         _buildSettingsItem(
-          icon: Icons.store, // Icon untuk toko
+          icon: Icons.store,
           text: 'Buat Toko',
           onTap: () {
             debugPrint('Buat Toko clicked');
-            // Tambahkan navigasi atau logika untuk membuat toko di sini
-            // Contoh: Navigator.push(context, MaterialPageRoute(builder: (context) => CreateShopPage()));
           },
         ),
         _buildSettingsItem(
@@ -266,14 +255,19 @@ class _ProfilePageState extends State<ProfilePage> {
           icon: Icons.compare_arrows,
           text: 'Keluar',
           onTap: () {
-            // Memanggil showDialog kustom yang disederhanakan
             showGeneralDialog(
               context: context,
               barrierDismissible: true,
-              barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+              barrierLabel:
+                  MaterialLocalizations.of(context).modalBarrierDismissLabel,
               barrierColor: Colors.black.withOpacity(0.5),
               transitionDuration: const Duration(milliseconds: 300),
-              transitionBuilder: (context, animation, secondaryAnimation, child) {
+              transitionBuilder: (
+                context,
+                animation,
+                secondaryAnimation,
+                child,
+              ) {
                 return ScaleTransition(
                   scale: CurvedAnimation(
                     parent: animation,
@@ -326,7 +320,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Text(
                                   "Batal",
-                                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),
@@ -347,7 +344,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Text(
                                   "Keluar",
-                                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),

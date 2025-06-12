@@ -62,7 +62,7 @@ class UserTypeSelector extends StatelessWidget {
               ],
               selected: selectedUserType,
               onSelectionChanged: onSelectionChanged,
-              emptySelectionAllowed: false,
+              emptySelectionAllowed: true,
               multiSelectionEnabled: false,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith<Color>((
