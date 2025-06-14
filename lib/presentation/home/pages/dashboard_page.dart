@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:propedia/presentation/home/pages/logic/dashboard_logic.dart';
 import 'package:propedia/presentation/home/pages/views/dashboard_view.dart';
-import 'package:propedia/presentation/home/pages/views/dashboard_penjual_view.dart';
+import 'package:propedia/presentation/home/pages/views/dashboard_seller_view.dart';
+import 'package:propedia/presentation/home/pages/views/dashboard_admin_view.dart'; // ✅ Tambahkan import ini
 
 class DashboardPage extends StatefulWidget {
   final String userName;
@@ -51,8 +52,19 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.userRole.toLowerCase() == 'penjual') {
+    final role = widget.userRole.toLowerCase();
+
+    if (role == 'penjual') {
       return DashboardPenjualView(
+        userName: widget.userName,
+        userEmail: widget.userEmail,
+        userRole: widget.userRole,
+        dashboardLogic: _dashboardLogic,
+      );
+    }
+
+    if (role == 'admin') {
+      return DashboardAdminView(
         userName: widget.userName,
         userEmail: widget.userEmail,
         userRole: widget.userRole,

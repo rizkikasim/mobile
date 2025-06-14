@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'App',
           theme: ThemeData(primarySwatch: Colors.blue),
-          home: const SplashPage(),
+          home: const SplashScreenPage(),
         );
       },
     );

@@ -1,14 +1,12 @@
-// lib/presentation/home/pages/chats/chatting_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:math'; // Untuk balasan acak
+import 'dart:math';
 
-// Definisikan tipe untuk pengirim pesan
 enum MessageSender { user, receiver }
 
 class ChattingPage extends StatefulWidget {
-  final String receiverName; // Nama penerima chat
-  final String receiverImageUrl; // URL gambar penerima chat
+  final String receiverName;
+  final String receiverImageUrl;
 
   const ChattingPage({
     super.key,
@@ -23,20 +21,18 @@ class ChattingPage extends StatefulWidget {
 class _ChattingPageState extends State<ChattingPage> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final List<Map<String, dynamic>> _messages = []; // Daftar pesan dinamis
-  bool _isTyping = false; // Indikator typing dari penerima
+  final List<Map<String, dynamic>> _messages = [];
+  bool _isTyping = false;
 
-  // Pesan balasan acak untuk simulasi "komputer"
   final List<String> _cannedResponses = [
     "Baik, saya mengerti. Ada hal lain yang bisa saya bantu?",
     "Menarik sekali! Bisakah Anda memberikan detail lebih lanjut?",
     "Oke, saya akan memproses permintaan Anda.",
     "Tentu saja! Apa yang ingin Anda lakukan selanjutnya?",
     "Mohon tunggu sebentar, saya sedang mencari informasinya.",
-    "Siap! Saya di sini untuk membantu Anda."
+    "Siap! Saya di sini untuk membantu Anda.",
   ];
 
-  // Daftar pesan cepat (quick chat)
   final List<String> _quickChatMessages = [
     "Oke, saya segera ke sana.",
     "Bisa tunggu sebentar?",
@@ -50,17 +46,15 @@ class _ChattingPageState extends State<ChattingPage> {
   @override
   void initState() {
     super.initState();
-    // Menambahkan pesan awal dari receiver untuk memulai percakapan
     _messages.add({
       'sender': MessageSender.receiver,
       'message': 'Halo! Ada yang bisa saya bantu hari ini?',
       'time': _getCurrentTime(),
       'imageUrl': widget.receiverImageUrl,
     });
-    _scrollToBottom(); // Gulir ke bawah setelah menambahkan pesan awal
+    _scrollToBottom();
   }
 
-  // Fungsi untuk mendapatkan waktu saat ini dalam format yang diinginkan
   String _getCurrentTime() {
     final now = DateTime.now();
     final hour = now.hour.toString().padLeft(2, '0');
@@ -68,7 +62,6 @@ class _ChattingPageState extends State<ChattingPage> {
     return '$hour:$minute';
   }
 
-  // Fungsi untuk mengirim pesan, baik dari input teks maupun quick chat
   void _sendMessage({String? quickMessage}) {
     final text = quickMessage ?? _messageController.text.trim();
     if (text.isNotEmpty) {
@@ -79,18 +72,18 @@ class _ChattingPageState extends State<ChattingPage> {
           'time': _getCurrentTime(),
         });
         _messageController.clear();
-        _isTyping = true; // Set isTyping menjadi true saat menunggu balasan
+        _isTyping = true;
       });
       _scrollToBottom();
 
-      // Simulasi balasan dari "komputer" setelah beberapa detik
       Future.delayed(const Duration(seconds: 2), () {
-        if (!mounted) return; // Pastikan widget masih terpasang
+        if (!mounted) return;
         setState(() {
-          _isTyping = false; // Nonaktifkan indikator typing
+          _isTyping = false;
           _messages.add({
             'sender': MessageSender.receiver,
-            'message': _cannedResponses[_random.nextInt(_cannedResponses.length)],
+            'message':
+                _cannedResponses[_random.nextInt(_cannedResponses.length)],
             'time': _getCurrentTime(),
             'imageUrl': widget.receiverImageUrl,
           });
@@ -100,7 +93,6 @@ class _ChattingPageState extends State<ChattingPage> {
     }
   }
 
-  // Gulir otomatis ke bagian bawah daftar pesan
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -127,7 +119,7 @@ class _ChattingPageState extends State<ChattingPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        centerTitle: false, // Ubah menjadi false agar judul bisa diatur secara custom
+        centerTitle: false,
         titleSpacing: 0,
         leading: Padding(
           padding: EdgeInsets.only(left: 16.w),
@@ -146,13 +138,15 @@ class _ChattingPageState extends State<ChattingPage> {
             ),
           ),
         ),
-        title: Row( // Menggunakan Row untuk menggabungkan avatar dan teks
+        title: Row(
           children: [
             CircleAvatar(
               radius: 20.r,
               backgroundImage: NetworkImage(widget.receiverImageUrl),
               onBackgroundImageError: (exception, stackTrace) {
-                debugPrint('ChattingPage: Error loading receiver image: $exception');
+                debugPrint(
+                  'ChattingPage: Error loading receiver image: $exception',
+                );
               },
             ),
             SizedBox(width: 10.w),
@@ -161,7 +155,7 @@ class _ChattingPageState extends State<ChattingPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget.receiverName, // Nama penerima dinamis
+                  widget.receiverName,
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
@@ -169,7 +163,7 @@ class _ChattingPageState extends State<ChattingPage> {
                   ),
                 ),
                 Text(
-                  _isTyping ? 'Typing...' : 'Active Now', // Status online dinamis
+                  _isTyping ? 'Typing...' : 'Active Now',
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: _isTyping ? Colors.blue : Colors.green,
@@ -191,9 +185,7 @@ class _ChattingPageState extends State<ChattingPage> {
               ),
               child: IconButton(
                 icon: Icon(Icons.more_vert, color: Colors.black, size: 24.w),
-                onPressed: () {
-                  // Aksi untuk menu lainnya
-                },
+                onPressed: () {},
               ),
             ),
           ),
@@ -223,57 +215,49 @@ class _ChattingPageState extends State<ChattingPage> {
               },
             ),
           ),
-          // Indikator typing dari penerima
           if (_isTyping)
             _buildReceiverTypingIndicator(imageUrl: widget.receiverImageUrl),
-          
-          // Bagian Quick Chat
+
           _buildQuickChatSuggestions(),
 
-          // Bagian Input Pesan
           _buildMessageInput(),
         ],
       ),
     );
   }
 
-  //--- Quick Chat Suggestions ---
-  // Widget ini menampilkan tombol-tombol pesan cepat yang bisa diklik pengguna.
   Widget _buildQuickChatSuggestions() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      alignment: Alignment.centerLeft, // Sesuaikan alignment
+      alignment: Alignment.centerLeft,
       child: Wrap(
-        spacing: 8.w, // Jarak antar tombol
-        runSpacing: 8.h, // Jarak antar baris tombol
-        children: _quickChatMessages.map((message) {
-          return GestureDetector(
-            onTap: () => _sendMessage(quickMessage: message), // Kirim pesan cepat
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(20.r),
-                border: Border.all(color: Colors.grey[300]!),
-              ),
-              child: Text(
-                message,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: Colors.black87,
+        spacing: 8.w,
+        runSpacing: 8.h,
+        children:
+            _quickChatMessages.map((message) {
+              return GestureDetector(
+                onTap: () => _sendMessage(quickMessage: message),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 8.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(20.r),
+                    border: Border.all(color: Colors.grey[300]!),
+                  ),
+                  child: Text(
+                    message,
+                    style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+                  ),
                 ),
-              ),
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
       ),
     );
   }
 
-  //--- Message Bubbles (Pesan Terkirim dan Diterima) ---
-  // Ini adalah widget untuk menampilkan gelembung pesan.
-
-  // Widget untuk pesan yang diterima (dari penerima)
   Widget _buildReceiverMessage({
     required String imageUrl,
     required String message,
@@ -297,7 +281,7 @@ class _ChattingPageState extends State<ChattingPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.receiverName, // Nama pengirim pesan dinamis
+                  widget.receiverName,
                   style: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
@@ -306,9 +290,12 @@ class _ChattingPageState extends State<ChattingPage> {
                 ),
                 SizedBox(height: 4.h),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 10.h,
+                  ),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200], // Warna abu-abu untuk pesan yang diterima
+                    color: Colors.grey[200],
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(15.r),
                       bottomLeft: Radius.circular(15.r),
@@ -333,11 +320,7 @@ class _ChattingPageState extends State<ChattingPage> {
     );
   }
 
-  // Widget untuk pesan yang dikirim (dari Anda)
-  Widget _buildSenderMessage({
-    required String message,
-    required String time,
-  }) {
+  Widget _buildSenderMessage({required String message, required String time}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h),
       child: Align(
@@ -348,7 +331,7 @@ class _ChattingPageState extends State<ChattingPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
               decoration: BoxDecoration(
-                color: const Color(0xFFDCF8C6), // Warna hijau muda untuk pesan yang dikirim (ala WhatsApp/Gojek)
+                color: const Color(0xFFDCF8C6),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15.r),
                   bottomLeft: Radius.circular(15.r),
@@ -371,8 +354,6 @@ class _ChattingPageState extends State<ChattingPage> {
     );
   }
 
-  //--- Typing Indicator ---
-  // Widget ini menampilkan indikator "Typing..." saat penerima sedang mengetik.
   Widget _buildReceiverTypingIndicator({required String imageUrl}) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h, left: 16.w),
@@ -399,7 +380,7 @@ class _ChattingPageState extends State<ChattingPage> {
             ),
             child: Row(
               children: [
-                Icon(Icons.more_horiz, size: 24.w, color: Colors.grey[700]), // '...'
+                Icon(Icons.more_horiz, size: 24.w, color: Colors.grey[700]),
               ],
             ),
           ),
@@ -408,11 +389,14 @@ class _ChattingPageState extends State<ChattingPage> {
     );
   }
 
-  //--- Message Input Bar ---
-  // Ini adalah *input field* dan tombol kirim pesan di bagian bawah.
   Widget _buildMessageInput() {
     return Container(
-      padding: EdgeInsets.only(bottom: 20.h, left: 16.w, right: 16.w, top: 10.h),
+      padding: EdgeInsets.only(
+        bottom: 20.h,
+        left: 16.w,
+        right: 16.w,
+        top: 10.h,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -420,7 +404,7 @@ class _ChattingPageState extends State<ChattingPage> {
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: const Offset(0, -2), // changes position of shadow
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -428,9 +412,7 @@ class _ChattingPageState extends State<ChattingPage> {
         children: [
           IconButton(
             icon: Icon(Icons.attachment, color: Colors.grey[600], size: 28.w),
-            onPressed: () {
-              // Aksi untuk attachment
-            },
+            onPressed: () {},
           ),
           SizedBox(width: 8.w),
           Expanded(
@@ -441,14 +423,17 @@ class _ChattingPageState extends State<ChattingPage> {
                 borderRadius: BorderRadius.circular(30.r),
               ),
               child: TextField(
-                controller: _messageController, // Gunakan controller
+                controller: _messageController,
                 decoration: InputDecoration(
                   hintText: 'Type your message',
-                  hintStyle: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
+                  hintStyle: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.grey[600],
+                  ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(vertical: 10.h),
                 ),
-                onSubmitted: (_) => _sendMessage(), // Kirim pesan saat menekan enter/submit
+                onSubmitted: (_) => _sendMessage(),
               ),
             ),
           ),
@@ -458,11 +443,11 @@ class _ChattingPageState extends State<ChattingPage> {
             height: 50.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFF28B446), // Warna hijau khas Gojek
+              color: const Color(0xFF28B446),
             ),
             child: IconButton(
               icon: Icon(Icons.send, color: Colors.white, size: 24.w),
-              onPressed: _sendMessage, // Panggil fungsi kirim pesan
+              onPressed: _sendMessage,
             ),
           ),
         ],

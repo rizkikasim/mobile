@@ -1,60 +1,108 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:propedia/presentation/core/constant/app_colors.dart';
+import 'package:propedia/constant/app_constant.dart';
+import 'package:propedia/controller/splash_controller.dart';
 import 'package:propedia/presentation/onboarding/pages/onboarding_page.dart';
 
-class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+class SplashScreenPage extends StatefulWidget {
+  const SplashScreenPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  State<SplashScreenPage> createState() => _SplashScreenPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashScreenPageState extends State<SplashScreenPage>
+    with TickerProviderStateMixin {
+  final SplashController _controller = SplashController();
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const OnboardingPage()),
-      );
-    });
+    _controller.init(
+      vsync: this,
+      onExplosionComplete: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const OnboardingPage()),
+        );
+      },
+      triggerBounce: () => setState(() {}),
+      triggerExplosion: () => setState(() {}),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppColors.gradientStart, AppColors.gradientEnd],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'assets/images/splash.png',
-                width: 120.w,
-                height: 120.h,
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          if (_controller.startExplosion)
+            AnimatedBuilder(
+              animation: _controller.circleExplosion,
+              builder: (_, __) {
+                return Positioned(
+                  left: (screenSize.width / 2) -
+                      (_controller.circleExplosion.value / 2),
+                  top: (screenSize.height / 2) -
+                      (_controller.circleExplosion.value / 2),
+                  child: Container(
+                    width: _controller.circleExplosion.value,
+                    height: _controller.circleExplosion.value,
+                    decoration: const BoxDecoration(
+                      color: Colors.lightGreen,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                );
+              },
+            ),
+          if (!_controller.startExplosion)
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SlideTransition(
+                    position: _controller.circleOffset,
+                    child: ScaleTransition(
+                      scale: _controller.showBounce
+                          ? _controller.bounceScale
+                          : const AlwaysStoppedAnimation(1.0),
+                      child: Container(
+                        width: 40.w,
+                        height: 40.h,
+                        margin: EdgeInsets.symmetric(horizontal: 10.w),
+                        decoration: const BoxDecoration(
+                          color: Colors.lightGreen,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SlideTransition(
+                    position: _controller.textOffset,
+                    child: Text(
+                      kAppName,
+                      style: TextStyle(
+                        fontSize: 34.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontFamily: kMindHubFontFamily,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 24.h),
-              Text(
-                'Properdia',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+        ],
       ),
     );
   }

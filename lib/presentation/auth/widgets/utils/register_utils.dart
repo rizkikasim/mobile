@@ -16,7 +16,7 @@ class RegisterUtils {
     if (password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) score++;
 
     if (score <= 2) {
-      return {'strength': 'Weak', 'color': Colors.red};
+      return {'strength': 'Lemah', 'color': Colors.red};
     } else if (score <= 4) {
       return {'strength': 'Moderate', 'color': Colors.orange};
     } else {
