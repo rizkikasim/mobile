@@ -12,6 +12,8 @@ import 'package:propedia/presentation/home/widgets/flash_sale_card.dart';
 import 'package:propedia/presentation/home/widgets/flash_sale_shimmer.dart';
 import 'package:propedia/presentation/home/widgets/snack_item_shimmer.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardView extends StatefulWidget {
   final String userName;
@@ -37,6 +39,23 @@ class _DashboardViewState extends State<DashboardView> {
 
   bool _isRefreshingData = false;
 
+  File? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  void _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final path = prefs.getString('profileImagePath');
+    if (path != null && File(path).existsSync()) {
+      setState(() {
+        _profileImage = File(path);
+      });
+    }
+  }
   Future<void> _handleRefresh() async {
     debugPrint('Refreshing data (DashboardView)...');
     setState(() {
@@ -110,29 +129,24 @@ class _DashboardViewState extends State<DashboardView> {
                                     ),
                               ),
                             );
+                            _loadProfileImage();
                           },
                           child: CircleAvatar(
                             radius: 25.w,
-                            backgroundImage: NetworkImage(
-                              defaultProfileImageUrl,
-                            ),
+                            backgroundImage: _profileImage != null
+                                ? FileImage(_profileImage!)
+                                : NetworkImage(defaultProfileImageUrl) as ImageProvider,
                             onBackgroundImageError: (exception, stackTrace) {
-                              debugPrint(
-                                'Error loading profile image: $exception',
-                              );
+                              debugPrint('Error loading profile image: $exception');
                             },
-                            child:
-                                defaultProfileImageUrl.isEmpty
-                                    ? Icon(
-                                      Icons.person,
-                                      size: 25.w,
-                                      color: Colors.white,
-                                    )
-                                    : null,
-                            backgroundColor:
-                                defaultProfileImageUrl.isEmpty
-                                    ? Colors.grey[300]
-                                    : null,
+                            child: _profileImage == null
+                              ? Icon(
+                                  Icons.person,
+                                  size: 25.w,
+                                  color: Colors.white,
+                                )
+                              : null,
+                            backgroundColor: _profileImage == null ? Colors.grey[300] : null,
                           ),
                         ),
                         SizedBox(width: 10.w),

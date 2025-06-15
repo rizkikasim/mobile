@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,9 @@ import 'package:propedia/presentation/auth/cubit/auth_cubit.dart';
 import 'package:propedia/presentation/auth/cubit/auth_state.dart';
 import 'package:propedia/presentation/auth/pages/login_page.dart';
 import 'package:propedia/presentation/auth/widgets/notify/custom_notification_card.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userName;
@@ -23,10 +27,60 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  File? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final path = prefs.getString('profile_image_path');
+    if (path != null && File(path).existsSync()) {
+      setState(() {
+        _profileImage = File(path);
+      });
+    }
+  }
+
+  Future<void> _saveProfileImagePath(String path) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profile_image_path', path);
+  }
+
+  bool _isPickingImage = false;
+
+  Future<void> _pickImage() async {
+    if (_isPickingImage) return;
+    _isPickingImage = true;
+
+    try {
+      final picker = ImagePicker();
+      final picked = await picker.pickImage(source: ImageSource.gallery);
+      if (picked != null) {
+        final dir = await getApplicationDocumentsDirectory();
+        final newPath = '${dir.path}/profile.jpg';
+        final newImage = await File(picked.path).copy(newPath);
+        setState(() => _profileImage = newImage);
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('profileImagePath', newImage.path);
+      }
+    } catch (e) {
+      debugPrint('Error picking image: $e');
+    } finally {
+      _isPickingImage = false;
+    }
+  }
+  
+
   void _showSnackBar(String message, Color color, {String? title}) {
     Color? indicatorColor;
     Color? textColor;
     Color? backgroundColor;
+
 
     if (color == Colors.red) {
       indicatorColor = Colors.red;
@@ -180,13 +234,20 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 40.r,
-            backgroundImage: const AssetImage(
-              'assets/images/onboarding_1.jpeg',
+          GestureDetector(
+            onTap: _pickImage,
+            child: CircleAvatar(
+              radius: 40.r,
+              backgroundImage: _profileImage != null
+              ? FileImage(_profileImage!)
+              : null,
+              backgroundColor: Colors.grey[300],
+              child: _profileImage == null
+              ? const Icon(Icons.camera_alt, color: Colors.white)
+              : null,
             ),
-            backgroundColor: Colors.grey[300],
           ),
+
           SizedBox(height: 15.h),
           Text(
             widget.userName,
